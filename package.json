@@ -1,0 +1,13 @@
+{
+  "name": "smart-home-platform-monorepo",
+  "version": "2.4.0",
+  "private": true,
+  "description": "Unified Edge-First, Energy-Aware Smart Home Ecosystem",
+  "scripts": {
+    "start": "python run_server.py",
+    "test": "pytest tests/ -v",
+    "measure": "python tools/measure_loc.py"
+  },
+  "author": "Dhanunjay Narra <dhanunjaynarra11@gmail.com>",
+  "license": "UNLICENSED"
+}
