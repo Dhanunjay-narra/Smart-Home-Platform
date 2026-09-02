@@ -48,8 +48,21 @@ class AuthService:
                 is_active=True,
                 home_ids=["home-master-01"]
             )
-            USERS_DB[admin_user.email] = admin_user
+            USERS_DB[admin_user.email.lower()] = admin_user
             USERS_DB[admin_user.user_id] = admin_user
+
+            dhanu_user = User(
+                user_id="usr-dhanu-001",
+                email="dhanu@123",
+                full_name="Dhanunjay Narra (Platform Owner)",
+                phone_number="+1-555-0199",
+                role=UserRole.PLATFORM_OWNER,
+                hashed_password=hash_password("bhanu"),
+                is_active=True,
+                home_ids=["home-master-01"]
+            )
+            USERS_DB[dhanu_user.email.lower()] = dhanu_user
+            USERS_DB[dhanu_user.user_id] = dhanu_user
 
             guest_user = User(
                 user_id="usr-guest-002",

@@ -52,14 +52,17 @@
       <button onclick="setHomeMode('VACATION')" id="btn-mode-VACATION" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5"><i class="fa-solid fa-umbrella-beach"></i> Vacation</button>
     </div>
 
-    <!-- 1-Click Demo Login & User Status -->
+    <!-- User Status & Login/Logout Controls -->
     <div class="flex items-center gap-3">
       <div id="userBadge" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-xs">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="font-bold text-slate-200" id="userNameDisplay">Dhanunjay Narra (Platform Owner)</span>
+        <span class="w-2.5 h-2.5 rounded-full bg-slate-500" id="userStatusDot"></span>
+        <span class="font-bold text-slate-300" id="userNameDisplay">Not Signed In</span>
       </div>
-      <button onclick="quick1ClickLogin()" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
-        <i class="fa-solid fa-key"></i> 1-Click Login
+      <button id="loginBtn" onclick="openLoginModal()" class="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </button>
+      <button id="logoutBtn" onclick="logout()" class="hidden px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
     </div>
   </header>
@@ -414,8 +417,127 @@
     </main>
   </div>
 
+  <!-- Interactive Login Modal Dialog -->
+  <div id="loginModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300" onclick="if(event.target===this) closeLoginModal()">
+    <div class="glass max-w-md w-full p-6 sm:p-8 rounded-3xl border border-slate-700/90 shadow-2xl relative" onclick="event.stopPropagation()">
+      <!-- Close Button -->
+      <button type="button" onclick="closeLoginModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition" title="Close">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3.5 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg glow-green shrink-0">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-extrabold text-slate-100">Sign In to Smart Home</h3>
+          <p class="text-xs text-slate-400">Enter your credentials to manage your ecosystem</p>
+        </div>
+      </div>
+
+      <!-- Login Form with standard attributes for browser autofill -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)" autocomplete="on" class="space-y-4">
+        <!-- Error Message Banner -->
+        <div id="loginErrorAlert" class="hidden p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs flex items-center gap-2">
+          <i class="fa-solid fa-circle-exclamation text-red-400 shrink-0"></i>
+          <span id="loginErrorMessage">Invalid username or password</span>
+        </div>
+
+        <div>
+          <label for="loginEmail" class="block text-xs font-semibold text-slate-300 mb-1.5">Username / Email</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 text-xs">
+              <i class="fa-solid fa-user"></i>
+            </span>
+            <input 
+              type="text" 
+              id="loginEmail" 
+              name="username" 
+              autocomplete="username" 
+              required 
+              placeholder="e.g. admin@smarthome.local" 
+              class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-dark-900 border border-slate-700 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+            />
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="loginPassword" class="block text-xs font-semibold text-slate-300">Password</label>
+          </div>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 text-xs">
+              <i class="fa-solid fa-key"></i>
+            </span>
+            <input 
+              type="password" 
+              id="loginPassword" 
+              name="password" 
+              autocomplete="current-password" 
+              required 
+              placeholder="••••••••••••" 
+              class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-dark-900 border border-slate-700 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+            />
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility()" 
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200 text-xs transition"
+              title="Toggle Password Visibility"
+            >
+              <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-1">
+          <label class="flex items-center gap-2 cursor-pointer text-xs text-slate-300 select-none">
+            <input type="checkbox" id="rememberCredentials" class="w-4 h-4 rounded bg-dark-900 border-slate-700 text-emerald-500 focus:ring-0 focus:ring-offset-0 cursor-pointer">
+            <span>Remember credentials (Autofill)</span>
+          </label>
+        </div>
+
+        <button 
+          type="submit" 
+          id="loginSubmitBtn" 
+          class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg glow-green transition flex items-center justify-center gap-2"
+        >
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Sign In</span>
+        </button>
+
+        <!-- Quick Demo Autofill Helpers -->
+        <div class="pt-4 border-t border-slate-800/80">
+          <p class="text-[11px] text-slate-400 mb-2 font-medium text-center">Quick Autofill Credentials:</p>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" onclick="fillDemoCredentials('dhanu@123', 'bhanu')" class="py-2 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 hover:bg-emerald-500/25 text-[11px] text-emerald-300 transition text-left flex items-center gap-2">
+              <i class="fa-solid fa-user-check text-emerald-400 text-xs"></i>
+              <span class="truncate font-bold">dhanu@123 (Owner)</span>
+            </button>
+            <button type="button" onclick="fillDemoCredentials('guest@smarthome.local', 'GuestPass2026!')" class="py-2 px-3 rounded-xl bg-dark-900/90 border border-slate-800 hover:border-blue-500/50 text-[11px] text-slate-300 transition text-left flex items-center gap-2">
+              <i class="fa-solid fa-user-group text-blue-400 text-xs"></i>
+              <span class="truncate font-semibold">Guest User</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
-    let currentAuthToken = "tok_admin_demo_2026";
+    const API_BASE = (window.location.protocol.startsWith('http') && window.location.port === '8000') ? '' : 'http://localhost:8000';
+    let currentAuthToken = localStorage.getItem('smarthome_auth_token') || "tok_admin_demo_2026";
+    let currentUser = null;
+    try {
+      const storedUser = localStorage.getItem('smarthome_user');
+      if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+      } else {
+        currentUser = { full_name: "Dhanunjay Narra", role: "PLATFORM_OWNER" };
+      }
+    } catch (e) {
+      currentUser = null;
+    }
     let energyChart = null;
 
     function showToast(title, message, icon = 'fa-check') {
@@ -469,31 +591,166 @@
       }
     }
 
-    async function quick1ClickLogin() {
+    function openLoginModal() {
+      const modal = document.getElementById('loginModal');
+      const emailInput = document.getElementById('loginEmail');
+      const passwordInput = document.getElementById('loginPassword');
+      const rememberCheckbox = document.getElementById('rememberCredentials');
+      const errorAlert = document.getElementById('loginErrorAlert');
+
+      if (errorAlert) errorAlert.classList.add('hidden');
+
+      const savedUsername = localStorage.getItem('smarthome_saved_username') || 'dhanu@123';
+      const savedPassword = localStorage.getItem('smarthome_saved_password') || 'bhanu';
+
+      emailInput.value = savedUsername;
+      passwordInput.value = savedPassword;
+      rememberCheckbox.checked = true;
+
+      modal.classList.remove('hidden');
+
+      setTimeout(() => {
+        if (emailInput.value && passwordInput.value) {
+          document.getElementById('loginSubmitBtn').focus();
+        } else if (emailInput.value) {
+          passwordInput.focus();
+        } else {
+          emailInput.focus();
+        }
+      }, 100);
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('loginModal');
+      modal.classList.add('hidden');
+      const errorAlert = document.getElementById('loginErrorAlert');
+      if (errorAlert) errorAlert.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility() {
+      const pwd = document.getElementById('loginPassword');
+      const icon = document.getElementById('togglePasswordIcon');
+      if (pwd.type === 'password') {
+        pwd.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        pwd.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    function fillDemoCredentials(email, pwd) {
+      document.getElementById('loginEmail').value = email;
+      document.getElementById('loginPassword').value = pwd;
+      document.getElementById('rememberCredentials').checked = true;
+      const errorAlert = document.getElementById('loginErrorAlert');
+      if (errorAlert) errorAlert.classList.add('hidden');
+    }
+
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+      const emailInput = document.getElementById('loginEmail');
+      const passwordInput = document.getElementById('loginPassword');
+      const rememberCheckbox = document.getElementById('rememberCredentials');
+      const submitBtn = document.getElementById('loginSubmitBtn');
+      const errorAlert = document.getElementById('loginErrorAlert');
+      const errorMessage = document.getElementById('loginErrorMessage');
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Signing in...`;
+      if (errorAlert) errorAlert.classList.add('hidden');
+
       try {
-        const res = await fetch('/api/v1/auth/login', {
+        const res = await fetch(API_BASE + '/api/v1/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: 'admin@smarthome.local', password: 'HomeAdmin2026!' })
+          body: JSON.stringify({ email: email, password: password })
         });
+
         const data = await res.json();
-        if (data.access_token) {
+
+        if (res.ok && data.access_token) {
           currentAuthToken = data.access_token;
-          document.getElementById('userNameDisplay').textContent = data.user.full_name;
-          showToast('Login Successful', `Logged in as ${data.user.full_name}`);
+          currentUser = data.user;
+
+          localStorage.setItem('smarthome_auth_token', currentAuthToken);
+          localStorage.setItem('smarthome_user', JSON.stringify(currentUser));
+
+          if (rememberCheckbox.checked) {
+            localStorage.setItem('smarthome_saved_username', email);
+            localStorage.setItem('smarthome_saved_password', password);
+            localStorage.setItem('smarthome_remember_me', 'true');
+          } else {
+            localStorage.removeItem('smarthome_saved_username');
+            localStorage.removeItem('smarthome_saved_password');
+            localStorage.removeItem('smarthome_remember_me');
+          }
+
+          updateAuthUI(currentUser);
+          closeLoginModal();
+          showToast('Login Successful', `Welcome, ${currentUser.full_name}!`, 'fa-circle-check');
+
           loadDevices();
           loadScenes();
           loadRules();
           loadAuditLogs();
+        } else {
+          const msg = data.detail || 'Invalid username or password. Please try again.';
+          errorMessage.textContent = msg;
+          errorAlert.classList.remove('hidden');
         }
       } catch (err) {
-        console.error("Login failed:", err);
+        console.error("Login request failed:", err);
+        errorMessage.textContent = 'Server connection error. Please verify backend is running.';
+        errorAlert.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i><span>Sign In</span>`;
       }
     }
 
+    function logout() {
+      currentAuthToken = null;
+      currentUser = null;
+      localStorage.removeItem('smarthome_auth_token');
+      localStorage.removeItem('smarthome_user');
+
+      updateAuthUI(null);
+      showToast('Signed Out', 'You have been logged out successfully.', 'fa-right-from-bracket');
+      loadAuditLogs();
+    }
+
+    function updateAuthUI(user) {
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const nameDisplay = document.getElementById('userNameDisplay');
+      const dot = document.getElementById('userStatusDot');
+
+      if (user) {
+        if (loginBtn) loginBtn.classList.add('hidden');
+        if (logoutBtn) logoutBtn.classList.remove('hidden');
+        if (nameDisplay) nameDisplay.textContent = `${user.full_name} (${user.role ? user.role.replace(/_/g, ' ') : 'User'})`;
+        if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse";
+      } else {
+        if (loginBtn) loginBtn.classList.remove('hidden');
+        if (logoutBtn) logoutBtn.classList.add('hidden');
+        if (nameDisplay) nameDisplay.textContent = "Not Signed In";
+        if (dot) dot.className = "w-2.5 h-2.5 rounded-full bg-slate-500";
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLoginModal();
+    });
+
     async function setHomeMode(mode) {
       try {
-        await fetch('/api/v1/homes/home-master-01/mode', {
+        await fetch(API_BASE + '/api/v1/homes/home-master-01/mode', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentAuthToken },
           body: JSON.stringify({ mode: mode })
@@ -511,7 +768,7 @@
 
     async function quickCommand(deviceId, command, value) {
       try {
-        await fetch('/api/v1/devices/' + deviceId + '/command', {
+        await fetch(API_BASE + '/api/v1/devices/' + deviceId + '/command', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentAuthToken },
           body: JSON.stringify({ command: command, value: value })
@@ -526,7 +783,7 @@
 
     async function triggerScene(sceneId) {
       try {
-        const res = await fetch('/api/v1/automation/scenes/' + sceneId + '/activate', {
+        const res = await fetch(API_BASE + '/api/v1/automation/scenes/' + sceneId + '/activate', {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
@@ -544,7 +801,7 @@
 
     async function loadScenes() {
       try {
-        const res = await fetch('/api/v1/automation/scenes', {
+        const res = await fetch(API_BASE + '/api/v1/automation/scenes', {
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         const scenes = await res.json();
@@ -600,7 +857,7 @@
 
     async function loadRules() {
       try {
-        const res = await fetch('/api/v1/automation/rules', {
+        const res = await fetch(API_BASE + '/api/v1/automation/rules', {
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         const rules = await res.json();
@@ -674,7 +931,7 @@
 
     async function toggleRule(ruleId) {
       try {
-        const res = await fetch('/api/v1/automation/rules/' + ruleId + '/toggle', {
+        const res = await fetch(API_BASE + '/api/v1/automation/rules/' + ruleId + '/toggle', {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
@@ -688,7 +945,7 @@
 
     async function runRule(ruleId) {
       try {
-        const res = await fetch('/api/v1/automation/rules/' + ruleId + '/run', {
+        const res = await fetch(API_BASE + '/api/v1/automation/rules/' + ruleId + '/run', {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
@@ -702,7 +959,7 @@
 
     async function loadDevices() {
       try {
-        const res = await fetch('/api/v1/devices', {
+        const res = await fetch(API_BASE + '/api/v1/devices', {
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         const devices = await res.json();
@@ -743,7 +1000,7 @@
 
     async function loadCameras() {
       try {
-        const res = await fetch('/api/v1/security/cameras', {
+        const res = await fetch(API_BASE + '/api/v1/security/cameras', {
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         const cameras = await res.json();
@@ -774,7 +1031,7 @@
 
     async function loadAuditLogs() {
       try {
-        const res = await fetch('/api/v1/auth/audit-logs?limit=10', {
+        const res = await fetch(API_BASE + '/api/v1/auth/audit-logs?limit=10', {
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         const logs = await res.json();
@@ -814,7 +1071,7 @@
       history.scrollTop = history.scrollHeight;
 
       try {
-        const res = await fetch('/api/v1/ai/chat', {
+        const res = await fetch(API_BASE + '/api/v1/ai/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentAuthToken },
           body: JSON.stringify({ query: text })
@@ -876,6 +1133,7 @@
 
     // Auto-initialize on load
     window.addEventListener('DOMContentLoaded', () => {
+      updateAuthUI(currentUser);
       initEnergyChart();
       loadDevices();
       loadScenes();

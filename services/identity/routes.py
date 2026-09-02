@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Header, Depends, HTTPException
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List, Dict, Any
+from libraries.common.exceptions import AuthenticationError, AuthorizationError
 from services.identity.auth_service import auth_service, USERS_DB, AUDIT_LOG_DB, GUEST_PASSES_DB
 from services.identity.models import UserRole, Permission
 
@@ -28,7 +29,14 @@ async def get_current_user(authorization: Optional[str] = Header(None)):
 
 @router.post("/login")
 async def login(req: LoginRequest):
-    return await auth_service.authenticate(req.email, req.password)
+    try:
+        return await auth_service.authenticate(req.email, req.password)
+    except AuthenticationError as e:
+        raise HTTPException(status_code=401, detail=str(e))
+    except AuthorizationError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Authentication failed: " + str(e))
 
 @router.get("/me")
 async def get_profile(user = Depends(get_current_user)):
