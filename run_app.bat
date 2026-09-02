@@ -5,5 +5,6 @@ echo =================================================================
 echo  Dashboard: http://localhost:8000
 echo  API Docs:  http://localhost:8000/api/docs
 echo =================================================================
+start http://localhost:8000
 python run_server.py
 pause
