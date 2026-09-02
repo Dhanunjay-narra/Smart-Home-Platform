@@ -1,20 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Home Platform — Next-Gen Unified Ecosystem</title>
+  <title>Smart Home — Architectural Living</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            brand: { 50: '#f0fdf4', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' },
-            dark: { 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+            linen: {
+              50: '#faf9f6',
+              100: '#f5f3ee',
+              200: '#eae6de',
+              300: '#dad4c7',
+              400: '#b8b0a1',
+              500: '#8e8677',
+              800: '#3a362f',
+              900: '#22201c',
+            },
+            pastel: {
+              sand: '#e8cbb0',
+              sage: '#b7cebf',
+              slate: '#b2c3d4',
+              clay: '#d9a99b',
+              amber: '#e9bc7b',
+              mint: '#a8d5ba',
+              lavender: '#c8c6dd',
+            },
+            stone: {
+              50: '#fafaf9',
+              100: '#f5f5f4',
+              200: '#e7e5e4',
+              300: '#d6d3d1',
+              400: '#a8a29e',
+              500: '#78716c',
+              600: '#57534e',
+              700: '#44403c',
+              800: '#292524',
+              900: '#1c1917',
+              950: '#0c0a09',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif']
           }
         }
       }
@@ -22,45 +54,102 @@
   </script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-    .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); }
-    .glow-green { box-shadow: 0 0 25px -5px rgba(34, 197, 94, 0.3); }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #f6f5f2;
+      color: #262422;
+    }
+    
+    /* Tactile Architectural Human-Designed Cards */
+    .architect-card {
+      background-color: #ffffff;
+      border: 1px solid #e8e5df;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px -2px rgba(38, 36, 34, 0.04), 0 1px 3px rgba(38, 36, 34, 0.02);
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .architect-card:hover {
+      border-color: #d6d0c4;
+      box-shadow: 0 8px 20px -4px rgba(38, 36, 34, 0.08), 0 2px 6px -2px rgba(38, 36, 34, 0.03);
+      transform: translateY(-2px);
+    }
+
+    .clean-input {
+      background-color: #ffffff;
+      border: 1px solid #dcd7cd;
+      border-radius: 14px;
+      color: #262422;
+      transition: all 0.15s ease;
+    }
+
+    .clean-input:focus {
+      outline: none;
+      border-color: #78716c;
+      box-shadow: 0 0 0 3px rgba(120, 113, 108, 0.12);
+    }
+
+    /* Soft Slider Track */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #eae6de;
+      border-radius: 9999px;
+      height: 6px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #3a362f;
+      cursor: pointer;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    /* Smooth Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #dcd7cd; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #b8b0a1; }
   </style>
 </head>
-<body class="bg-dark-950 text-slate-100 min-h-screen flex flex-col antialiased">
+<body class="min-h-screen flex flex-col antialiased bg-[#f6f5f2] text-[#262422] selection:bg-[#e8cbb0] selection:text-[#3a362f]">
 
-  <!-- 1. FULL-SCREEN LOGIN VIEW (Shown by default on every load) -->
-  <div id="loginView" class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-dark-950 via-slate-900 to-dark-950 relative overflow-hidden">
-    <!-- Ambient Glow Effects -->
-    <div class="absolute -top-32 -right-32 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-teal-500/15 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- ========================================================================= -->
+  <!-- 1. FULL-SCREEN LOGIN VIEW (Humanized Pastel-Cement Minimalist) -->
+  <!-- ========================================================================= -->
+  <div id="loginView" class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-[#f6f5f2] relative overflow-hidden">
+    <!-- Subtle Warm Ambient Background Accents -->
+    <div class="absolute -top-32 -right-32 w-80 h-80 bg-[#e8cbb0]/30 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-[#b7cebf]/30 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="glass-card w-full max-w-md p-6 sm:p-8 rounded-3xl shadow-2xl border border-slate-700/60 relative z-10 backdrop-blur-2xl">
-      <!-- Logo & Title -->
-      <div class="text-center mb-6">
-        <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-2xl shadow-xl glow-green mb-3.5">
-          <i class="fa-solid fa-bolt-lightning"></i>
+    <div class="architect-card w-full max-w-md p-8 sm:p-10 relative z-10 border border-[#e5e1d8] shadow-xl">
+      <!-- Brand Header -->
+      <div class="text-center mb-8">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-[#3a362f] text-white flex items-center justify-center text-xl font-bold mb-4 shadow-sm">
+          <i class="fa-solid fa-house"></i>
         </div>
-        <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center justify-center gap-2">
-          Smart Home <span class="px-2 py-0.5 text-[11px] font-black rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PRO v2.4</span>
+        <h2 class="text-2xl font-black tracking-tight text-[#262422]">
+          Smart Home
         </h2>
-        <p class="text-xs text-slate-400 mt-1 font-medium">Smart Villa 2026 • Edge Hub Portal</p>
+        <p class="text-xs text-[#78716c] mt-1.5 font-medium">Unified Living & Edge Platform</p>
       </div>
 
       <!-- Login Form -->
       <form id="loginForm" onsubmit="handleLoginSubmit(event)" autocomplete="on" class="space-y-4">
-        <!-- Error Alert -->
-        <div id="loginErrorAlert" class="hidden p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs flex items-center gap-2">
-          <i class="fa-solid fa-circle-exclamation text-red-400 shrink-0"></i>
+        <!-- Error Banner -->
+        <div id="loginErrorAlert" class="hidden p-3.5 rounded-2xl bg-[#fdf2f0] border border-[#f5c2bb] text-[#a84338] text-xs flex items-center gap-2.5">
+          <i class="fa-solid fa-circle-exclamation text-[#d95d50] shrink-0 text-sm"></i>
           <span id="loginErrorMessage">Please enter both email and password.</span>
         </div>
 
         <div>
-          <label for="loginEmail" class="block text-xs font-semibold text-slate-300 mb-1.5">Email / Username</label>
+          <label for="loginEmail" class="block text-xs font-bold text-[#57534e] mb-1.5 uppercase tracking-wider text-[11px]">Email / Member ID</label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 text-xs">
-              <i class="fa-solid fa-envelope"></i>
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#a8a29e] text-xs">
+              <i class="fa-regular fa-envelope"></i>
             </span>
             <input 
               type="text" 
@@ -69,16 +158,16 @@
               autocomplete="username" 
               required 
               placeholder="e.g. dhanu@123 or any email..." 
-              class="w-full pl-10 pr-4 py-3 rounded-xl bg-dark-900/90 border border-slate-700 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+              class="clean-input w-full pl-10 pr-4 py-3 text-xs placeholder-[#a8a29e]"
             />
           </div>
         </div>
 
         <div>
-          <label for="loginPassword" class="block text-xs font-semibold text-slate-300 mb-1.5">Password</label>
+          <label for="loginPassword" class="block text-xs font-bold text-[#57534e] mb-1.5 uppercase tracking-wider text-[11px]">Password</label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 text-xs">
-              <i class="fa-solid fa-key"></i>
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#a8a29e] text-xs">
+              <i class="fa-solid fa-lock"></i>
             </span>
             <input 
               type="password" 
@@ -86,16 +175,16 @@
               name="password" 
               autocomplete="current-password" 
               required 
-              placeholder="Enter password..." 
-              class="w-full pl-10 pr-10 py-3 rounded-xl bg-dark-900/90 border border-slate-700 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+              placeholder="Enter your password" 
+              class="clean-input w-full pl-10 pr-10 py-3 text-xs placeholder-[#a8a29e]"
             />
             <button 
               type="button" 
               onclick="togglePasswordVisibility()" 
-              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200 text-xs transition cursor-pointer"
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#a8a29e] hover:text-[#57534e] text-xs transition cursor-pointer"
               title="Toggle Password Visibility"
             >
-              <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+              <i class="fa-regular fa-eye" id="togglePasswordIcon"></i>
             </button>
           </div>
         </div>
@@ -103,23 +192,23 @@
         <button 
           type="submit" 
           id="loginSubmitBtn" 
-          class="w-full py-3.5 mt-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg glow-green transition flex items-center justify-center gap-2 cursor-pointer"
+          class="w-full py-3.5 mt-3 bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs rounded-2xl shadow-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
         >
-          <i class="fa-solid fa-right-to-bracket"></i>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
           <span>Sign In to Dashboard</span>
         </button>
 
-        <!-- Quick 1-Click Autofill Helpers -->
-        <div class="pt-4 border-t border-slate-800/80">
-          <p class="text-[11px] text-slate-400 mb-2 font-medium text-center">Quick Autofill (Optional):</p>
-          <div class="grid grid-cols-2 gap-2">
-            <button type="button" onclick="fillDemoCredentials('dhanu@123', 'bhanu')" class="py-2 px-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 hover:bg-emerald-500/25 text-[11px] text-emerald-300 transition text-left flex items-center gap-2 cursor-pointer">
-              <i class="fa-solid fa-user-check text-emerald-400 text-xs"></i>
+        <!-- Quick 1-Click Demo Fill Presets -->
+        <div class="pt-5 mt-5 border-t border-[#eae6de]">
+          <p class="text-[11px] text-[#78716c] mb-2.5 font-medium text-center">Quick Profile Presets:</p>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button type="button" onclick="fillDemoCredentials('dhanu@123', 'bhanu')" class="py-2.5 px-3.5 rounded-xl bg-[#f5f3ee] border border-[#e5e1d8] hover:bg-[#eae6de] text-[11px] text-[#3a362f] font-semibold transition text-left flex items-center gap-2 cursor-pointer">
+              <span class="w-5 h-5 rounded-full bg-[#e8cbb0] text-[#785935] flex items-center justify-center text-[10px] font-bold">D</span>
               <span class="truncate font-bold">dhanu@123</span>
             </button>
-            <button type="button" onclick="fillDemoCredentials('admin@smarthome.local', 'HomeAdmin2026!')" class="py-2 px-3 rounded-xl bg-dark-900/90 border border-slate-800 hover:border-blue-500/50 text-[11px] text-slate-300 transition text-left flex items-center gap-2 cursor-pointer">
-              <i class="fa-solid fa-shield text-blue-400 text-xs"></i>
-              <span class="truncate font-semibold">Admin Demo</span>
+            <button type="button" onclick="fillDemoCredentials('admin@smarthome.local', 'HomeAdmin2026!')" class="py-2.5 px-3.5 rounded-xl bg-[#f5f3ee] border border-[#e5e1d8] hover:bg-[#eae6de] text-[11px] text-[#3a362f] font-semibold transition text-left flex items-center gap-2 cursor-pointer">
+              <span class="w-5 h-5 rounded-full bg-[#b7cebf] text-[#335c44] flex items-center justify-center text-[10px] font-bold">A</span>
+              <span class="truncate font-bold">Admin Demo</span>
             </button>
           </div>
         </div>
@@ -127,399 +216,514 @@
     </div>
   </div>
 
-  <!-- 2. MAIN APPLICATION DASHBOARD (Hidden until signed in) -->
-  <div id="appDashboard" class="hidden min-h-screen flex flex-col flex-1">
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION DASHBOARD (Nude / Pastel / Cement White Palette) -->
+  <!-- ========================================================================= -->
+  <div id="appDashboard" class="hidden min-h-screen flex flex-col flex-1 bg-[#f6f5f2]">
+    
     <!-- Top Header Navigation -->
-    <header class="glass sticky top-0 z-50 border-b border-slate-800/80 px-6 py-3.5 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg glow-green">
-          <i class="fa-solid fa-bolt-lightning"></i>
+    <header class="bg-white border-b border-[#e8e5df] px-6 py-3.5 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-2xl bg-[#3a362f] text-white flex items-center justify-center font-bold text-base shadow-sm">
+          <i class="fa-solid fa-house"></i>
         </div>
         <div>
-          <h1 class="font-extrabold text-lg tracking-tight flex items-center gap-2">
-            Smart Home <span class="px-2 py-0.5 text-[10px] font-black rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PRO v2.4</span>
+          <h1 class="font-extrabold text-base tracking-tight text-[#262422] flex items-center gap-2">
+            Smart Home <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-[#f5f3ee] text-[#57534e] border border-[#e5e1d8]">Villa Master</span>
           </h1>
-          <p class="text-xs text-slate-400 font-medium">Smart Villa 2026 • Edge Hub Active</p>
+          <p class="text-[11px] text-[#78716c] font-medium flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-[#6a997e]"></span>
+            18 Smart Devices Active • 24.2°C Living Space
+          </p>
         </div>
       </div>
 
-      <!-- Operating Mode Selector -->
-      <div class="hidden md:flex items-center bg-dark-900/90 rounded-xl p-1 border border-slate-800 text-xs font-semibold">
-        <button onclick="setHomeMode('HOME')" id="btn-mode-HOME" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold transition flex items-center gap-1.5"><i class="fa-solid fa-house"></i> Home</button>
-        <button onclick="setHomeMode('AWAY')" id="btn-mode-AWAY" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5"><i class="fa-solid fa-person-walking-luggage"></i> Away</button>
-        <button onclick="setHomeMode('SLEEP')" id="btn-mode-SLEEP" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5"><i class="fa-solid fa-moon"></i> Sleep</button>
-        <button onclick="setHomeMode('VACATION')" id="btn-mode-VACATION" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5"><i class="fa-solid fa-umbrella-beach"></i> Vacation</button>
+      <!-- Tactile Mode Switcher -->
+      <div class="hidden md:flex items-center bg-[#f0ede6] rounded-2xl p-1 border border-[#e2ded5] text-xs font-semibold">
+        <button onclick="setHomeMode('HOME')" id="btn-mode-HOME" class="px-3.5 py-1.5 rounded-xl bg-white text-[#262422] font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer border border-[#e2ded5]">
+          <i class="fa-solid fa-house text-[#9c754d]"></i> Home
+        </button>
+        <button onclick="setHomeMode('AWAY')" id="btn-mode-AWAY" class="px-3.5 py-1.5 rounded-xl text-[#78716c] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-person-walking-luggage"></i> Away
+        </button>
+        <button onclick="setHomeMode('SLEEP')" id="btn-mode-SLEEP" class="px-3.5 py-1.5 rounded-xl text-[#78716c] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-moon"></i> Sleep
+        </button>
+        <button onclick="setHomeMode('VACATION')" id="btn-mode-VACATION" class="px-3.5 py-1.5 rounded-xl text-[#78716c] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-umbrella-beach"></i> Vacation
+        </button>
       </div>
 
-      <!-- User Status & Top Header Logout Button -->
+      <!-- User Profile Badge & Logout Button -->
       <div class="flex items-center gap-3">
-        <div id="userBadge" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-xs">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" id="userStatusDot"></span>
-          <span class="font-bold text-slate-200" id="userNameDisplay">Dhanunjay Narra (PLATFORM OWNER)</span>
+        <div id="userBadge" class="flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-[#faf9f6] border border-[#e5e1d8] text-xs font-medium">
+          <div class="w-6 h-6 rounded-full bg-[#e8cbb0] text-[#5e432a] flex items-center justify-center text-[10px] font-bold" id="userAvatar">
+            DN
+          </div>
+          <span class="font-bold text-[#3a362f]" id="userNameDisplay">Dhanunjay Narra (PLATFORM OWNER)</span>
         </div>
-        <button onclick="logout()" class="px-3.5 py-1.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 hover:text-red-300 font-bold text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="Sign out of platform">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        <button onclick="logout()" class="px-3.5 py-1.5 rounded-2xl bg-[#fdf2f0] hover:bg-[#fae4e1] border border-[#f5c2bb] text-[#a84338] hover:text-[#8a3329] font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-sm" title="Sign out of platform">
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i> Logout
         </button>
       </div>
     </header>
 
-  <!-- Main Viewport Layout -->
-  <div class="flex-1 flex overflow-hidden">
+    <!-- Main Workspace Layout -->
+    <div class="flex-1 flex overflow-hidden">
 
-    <!-- Sidebar Navigation -->
-    <aside class="w-64 glass border-r border-slate-800/80 hidden lg:flex flex-col p-4 space-y-1">
-      <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 px-3 py-2">Ecosystem Modules</div>
-      <button onclick="switchTab('overview')" id="tab-btn-overview" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-        <i class="fa-solid fa-table-cells-large text-sm w-4"></i> Overview & Metrics
-      </button>
-      <button onclick="switchTab('devices')" id="tab-btn-devices" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
-        <i class="fa-solid fa-lightbulb text-sm w-4"></i> Devices & Capabilities
-      </button>
-      <button onclick="switchTab('energy')" id="tab-btn-energy" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
-        <i class="fa-solid fa-solar-panel text-sm w-4"></i> Solar & Energy Flow
-      </button>
-      <button onclick="switchTab('security')" id="tab-btn-security" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
-        <i class="fa-solid fa-shield-halved text-sm w-4"></i> Security & Video AI
-      </button>
-      <button onclick="switchTab('automations')" id="tab-btn-automations" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
-        <i class="fa-solid fa-wand-magic-sparkles text-sm w-4"></i> Scenes & Routines
-      </button>
-      <button onclick="switchTab('ai-assistant')" id="tab-btn-ai-assistant" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
-        <i class="fa-solid fa-comment-dots text-sm w-4"></i> Natural Language AI
-      </button>
-      <button onclick="switchTab('audit')" id="tab-btn-audit" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
-        <i class="fa-solid fa-clock-rotate-left text-sm w-4"></i> Audit & Governance
-      </button>
+      <!-- Left Sidebar Navigation -->
+      <aside class="w-64 bg-white border-r border-[#e8e5df] hidden lg:flex flex-col p-4 space-y-1.5">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-[#a8a29e] px-3 py-2">Ecosystem Modules</div>
+        
+        <button onclick="switchTab('overview')" id="tab-btn-overview" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold bg-[#3a362f] text-white transition cursor-pointer shadow-sm">
+          <i class="fa-solid fa-table-cells-large text-sm w-4"></i> Overview & Metrics
+        </button>
+        <button onclick="switchTab('devices')" id="tab-btn-devices" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer">
+          <i class="fa-solid fa-sliders text-sm w-4 text-[#8e8677]"></i> Devices & Controls
+        </button>
+        <button onclick="switchTab('energy')" id="tab-btn-energy" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer">
+          <i class="fa-solid fa-solar-panel text-sm w-4 text-[#8e8677]"></i> Solar & Power Flow
+        </button>
+        <button onclick="switchTab('security')" id="tab-btn-security" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer">
+          <i class="fa-solid fa-shield-halved text-sm w-4 text-[#8e8677]"></i> Security & Cameras
+        </button>
+        <button onclick="switchTab('automations')" id="tab-btn-automations" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer">
+          <i class="fa-solid fa-wand-magic-sparkles text-sm w-4 text-[#8e8677]"></i> Scenes & Routines
+        </button>
+        <button onclick="switchTab('ai-assistant')" id="tab-btn-ai-assistant" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer">
+          <i class="fa-solid fa-robot text-sm w-4 text-[#8e8677]"></i> AI Assistant
+        </button>
+        <button onclick="switchTab('audit')" id="tab-btn-audit" class="tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer">
+          <i class="fa-solid fa-clock-rotate-left text-sm w-4 text-[#8e8677]"></i> Audit & Activity
+        </button>
 
-      <div class="mt-auto pt-4 border-t border-slate-800/80">
-        <div class="p-3 rounded-xl bg-dark-900/90 border border-slate-800 text-xs">
-          <div class="flex items-center justify-between text-slate-400">
-            <span>Edge Hub CPU</span>
-            <span class="text-emerald-400 font-bold">12%</span>
-          </div>
-          <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
-            <div class="bg-emerald-500 h-full w-[12%]"></div>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content Panel -->
-    <main class="flex-1 overflow-y-auto p-6 space-y-6">
-
-      <!-- 1. OVERVIEW TAB -->
-      <section id="tab-overview" class="space-y-6">
-        <!-- Top Metrics Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="glass p-5 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Solar Generation</span>
-              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center"><i class="fa-solid fa-sun"></i></div>
+        <!-- Edge Gateway Status Card -->
+        <div class="mt-auto pt-4 border-t border-[#e8e5df]">
+          <div class="p-3.5 rounded-2xl bg-[#faf9f6] border border-[#e5e1d8] text-xs">
+            <div class="flex items-center justify-between text-[#3a362f] font-semibold">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-microchip text-[#78716c]"></i> Edge Core Hub</span>
+              <span class="text-[#4e8264] font-bold">Online</span>
             </div>
-            <div class="mt-3 flex items-baseline gap-2">
-              <span class="text-2xl font-black text-amber-300" id="metricSolar">4.85</span>
-              <span class="text-xs font-bold text-slate-400">kW</span>
+            <div class="flex items-center justify-between text-[11px] text-[#78716c] mt-2 font-mono">
+              <span>CPU: 12%</span>
+              <span>12ms Latency</span>
             </div>
-            <p class="text-[11px] text-emerald-400 mt-1 font-medium"><i class="fa-solid fa-arrow-up mr-1"></i>28.4 kWh generated today</p>
-          </div>
-
-          <div class="glass p-5 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Home Power Load</span>
-              <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-bolt"></i></div>
+            <div class="w-full bg-[#e8e5df] h-1.5 rounded-full mt-1.5 overflow-hidden">
+              <div class="bg-[#3a362f] h-full w-[12%]"></div>
             </div>
-            <div class="mt-3 flex items-baseline gap-2">
-              <span class="text-2xl font-black text-blue-300" id="metricLoad">3.20</span>
-              <span class="text-xs font-bold text-slate-400">kW</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mt-1 font-medium">100% solar self-powered</p>
-          </div>
-
-          <div class="glass p-5 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Battery Storage (BSS)</span>
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-car-battery"></i></div>
-            </div>
-            <div class="mt-3 flex items-baseline gap-2">
-              <span class="text-2xl font-black text-emerald-300" id="metricBattery">88.5</span>
-              <span class="text-xs font-bold text-slate-400">%</span>
-            </div>
-            <p class="text-[11px] text-emerald-400 mt-1 font-medium">Charging at +1.20 kW</p>
-          </div>
-
-          <div class="glass p-5 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Active Security</span>
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-shield-check"></i></div>
-            </div>
-            <div class="mt-3 flex items-baseline gap-2">
-              <span class="text-xl font-black text-emerald-400" id="metricSecurity">ALL SECURE</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mt-1 font-medium">3 AI cameras • Perimeter locked</p>
           </div>
         </div>
+      </aside>
 
-        <!-- Quick Scene Activation Strip -->
-        <div class="glass p-6 rounded-2xl">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="font-extrabold text-sm text-slate-200 flex items-center gap-2"><i class="fa-solid fa-sparkles text-emerald-400"></i> Instant Scenes & Routines</h2>
-            <span class="text-xs text-slate-400">One-tap multi-device orchestration</span>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <button onclick="triggerScene('scene-movie-night')" class="p-4 rounded-xl bg-dark-900/90 border border-slate-800 hover:border-emerald-500/50 transition text-left group">
-              <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-film"></i></div>
-              <div class="font-bold text-xs text-slate-200">Movie Night</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">Lights 20% • AC 22°C</div>
-            </button>
-            <button onclick="triggerScene('scene-bedtime')" class="p-4 rounded-xl bg-dark-900/90 border border-slate-800 hover:border-emerald-500/50 transition text-left group">
-              <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-moon"></i></div>
-              <div class="font-bold text-xs text-slate-200">Bedtime Sanctuary</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">Doors Lock • Sleep Mode</div>
-            </button>
-            <button onclick="quickCommand('dev-light-living', 'power', true)" class="p-4 rounded-xl bg-dark-900/90 border border-slate-800 hover:border-emerald-500/50 transition text-left group">
-              <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-lightbulb"></i></div>
-              <div class="font-bold text-xs text-slate-200">Bright Ambient</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">100% Brightness • Warm</div>
-            </button>
-            <button onclick="quickCommand('dev-garage-door', 'garage_door', 'CLOSED')" class="p-4 rounded-xl bg-dark-900/90 border border-slate-800 hover:border-emerald-500/50 transition text-left group">
-              <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-2 group-hover:scale-110 transition"><i class="fa-solid fa-warehouse"></i></div>
-              <div class="font-bold text-xs text-slate-200">Close Garage</div>
-              <div class="text-[10px] text-slate-500 mt-0.5">Secure garage bay</div>
-            </button>
-          </div>
-        </div>
+      <!-- Main Content Viewport -->
+      <main class="flex-1 overflow-y-auto p-6 space-y-6">
 
-        <!-- Telemetry Chart & Live Feed Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div class="glass p-6 rounded-2xl lg:col-span-2">
+        <!-- =================================================================== -->
+        <!-- 1. OVERVIEW & METRICS TAB -->
+        <!-- =================================================================== -->
+        <section id="tab-overview" class="space-y-6">
+          
+          <!-- Welcoming Hero Banner -->
+          <div class="architect-card p-6 border border-[#e5e1d8] bg-white relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
+              <div>
+                <span class="px-2.5 py-1 rounded-full bg-[#f4ece3] text-[#735233] text-[11px] font-bold border border-[#ebdccf]">
+                  ✨ Villa Master Living
+                </span>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#262422] mt-2">Welcome Home, <span id="welcomeUserName">Dhanunjay</span></h2>
+                <p class="text-xs text-[#78716c] mt-1 font-medium">100% clean solar self-powered. All perimeter safety zones armed.</p>
+              </div>
+              <div class="flex gap-2.5 shrink-0">
+                <button onclick="triggerScene('scene-movie-night')" class="px-4 py-2 rounded-2xl bg-[#f5f3ee] border border-[#e0dad0] hover:bg-[#eae6de] text-[#3a362f] font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-film text-[#8e6e53]"></i> Movie Mode
+                </button>
+                <button onclick="triggerScene('scene-bedtime')" class="px-4 py-2 rounded-2xl bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-moon"></i> Bedtime
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top 4 Pastel Architectural Metric Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Solar Generation (Soft Nude Sand) -->
+            <div class="architect-card p-5 border-l-4 border-l-[#d4a373]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#78716c]">Rooftop Solar</span>
+                <div class="w-9 h-9 rounded-xl bg-[#faedd9] text-[#9c6a3b] flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-sun text-sm"></i>
+                </div>
+              </div>
+              <div class="mt-3 flex items-baseline gap-1.5">
+                <span class="text-2xl font-black text-[#262422]" id="metricSolar">4.85</span>
+                <span class="text-xs font-bold text-[#78716c]">kW</span>
+              </div>
+              <p class="text-[11px] text-[#8f5d2f] mt-1 font-semibold flex items-center gap-1">
+                <i class="fa-solid fa-arrow-trend-up"></i> +28.4 kWh generated today
+              </p>
+            </div>
+
+            <!-- Home Power Load (Soft Slate Pastel) -->
+            <div class="architect-card p-5 border-l-4 border-l-[#8da9c4]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#78716c]">Home Power Load</span>
+                <div class="w-9 h-9 rounded-xl bg-[#e3ecf5] text-[#416282] flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-bolt text-sm"></i>
+                </div>
+              </div>
+              <div class="mt-3 flex items-baseline gap-1.5">
+                <span class="text-2xl font-black text-[#262422]" id="metricLoad">3.20</span>
+                <span class="text-xs font-bold text-[#78716c]">kW</span>
+              </div>
+              <p class="text-[11px] text-[#416282] mt-1 font-semibold flex items-center gap-1">
+                <i class="fa-solid fa-leaf text-[#5c8a71]"></i> 100% solar self-powered
+              </p>
+            </div>
+
+            <!-- Battery Storage (Soft Sage Mint) -->
+            <div class="architect-card p-5 border-l-4 border-l-[#84a98c]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#78716c]">Battery Reserve</span>
+                <div class="w-9 h-9 rounded-xl bg-[#e6f0e9] text-[#3d6e4f] flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-car-battery text-sm"></i>
+                </div>
+              </div>
+              <div class="mt-3 flex items-baseline gap-1.5">
+                <span class="text-2xl font-black text-[#262422]" id="metricBattery">88.5</span>
+                <span class="text-xs font-bold text-[#78716c]">%</span>
+              </div>
+              <p class="text-[11px] text-[#3d6e4f] mt-1 font-semibold">Charging at +1.20 kW</p>
+            </div>
+
+            <!-- Security State (Soft Lavender / Slate) -->
+            <div class="architect-card p-5 border-l-4 border-l-[#a3a1c7]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#78716c]">Security Status</span>
+                <div class="w-9 h-9 rounded-xl bg-[#eeecf7] text-[#55527a] flex items-center justify-center font-bold">
+                  <i class="fa-solid fa-shield-halved text-sm"></i>
+                </div>
+              </div>
+              <div class="mt-3 flex items-baseline gap-1.5">
+                <span class="text-xl font-black text-[#3d6e4f]" id="metricSecurity">ALL SECURE</span>
+              </div>
+              <p class="text-[11px] text-[#78716c] mt-1 font-medium">3 AI cameras • Perimeter locked</p>
+            </div>
+          </div>
+
+          <!-- Quick One-Tap Mood Presets -->
+          <div class="architect-card p-6">
             <div class="flex items-center justify-between mb-4">
-              <h2 class="font-extrabold text-sm text-slate-200 flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-400"></i> Real-Time Solar vs Load Power (kW)</h2>
-              <span class="text-xs text-slate-400">Live 1-sec sampling</span>
-            </div>
-            <div class="h-64">
-              <canvas id="energyChart"></canvas>
-            </div>
-          </div>
-
-          <div class="glass p-6 rounded-2xl">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="font-extrabold text-sm text-slate-200 flex items-center gap-2"><i class="fa-solid fa-microchip text-emerald-400"></i> Live Edge Telemetry</h2>
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            </div>
-            <div id="liveTelemetryFeed" class="space-y-2.5 text-xs font-mono max-h-64 overflow-y-auto">
-              <div class="p-2.5 rounded-lg bg-dark-900/80 border border-slate-800 text-slate-300">
-                <span class="text-emerald-400">[SOLAR_MPPT]</span> 4.85 kW yield • Inverter 41.5°C
-              </div>
-              <div class="p-2.5 rounded-lg bg-dark-900/80 border border-slate-800 text-slate-300">
-                <span class="text-blue-400">[EV_WALLBOX]</span> 7.4 kW charging • Tesla Model 3
-              </div>
-              <div class="p-2.5 rounded-lg bg-dark-900/80 border border-slate-800 text-slate-300">
-                <span class="text-amber-400">[HVAC_CLIMATE]</span> Room 24.2°C • Target 23.0°C
-              </div>
-              <div class="p-2.5 rounded-lg bg-dark-900/80 border border-slate-800 text-slate-300">
-                <span class="text-purple-400">[MMWAVE_RADAR]</span> Living Room Occupied
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. DEVICES TAB -->
-      <section id="tab-devices" class="hidden space-y-6">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-black text-slate-100 flex items-center gap-2"><i class="fa-solid fa-microchip text-emerald-400"></i> Active Smart Devices & Controls</h2>
-          <span class="text-xs text-slate-400">Extensible Trait Capability Architecture</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="devicesGrid">
-          <!-- Dynamically Populated via Javascript -->
-        </div>
-      </section>
-
-      <!-- 3. ENERGY TAB -->
-      <section id="tab-energy" class="hidden space-y-6">
-        <div class="glass p-6 rounded-2xl">
-          <h2 class="text-lg font-black text-slate-100 flex items-center gap-2 mb-4"><i class="fa-solid fa-solar-panel text-amber-400"></i> Whole-Home Energy Flow Architecture</h2>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
-            <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30">
-              <i class="fa-solid fa-sun text-2xl text-amber-400 mb-2"></i>
-              <div class="text-xs text-slate-400">Rooftop Solar</div>
-              <div class="text-xl font-black text-amber-300">4.85 kW</div>
-            </div>
-            <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
-              <i class="fa-solid fa-car-battery text-2xl text-emerald-400 mb-2"></i>
-              <div class="text-xs text-slate-400">Battery Storage (15kWh)</div>
-              <div class="text-xl font-black text-emerald-300">88.5% SoC (+1.2kW)</div>
-            </div>
-            <div class="p-4 rounded-xl bg-blue-500/10 border border-blue-500/30">
-              <i class="fa-solid fa-house-signal text-2xl text-blue-400 mb-2"></i>
-              <div class="text-xs text-slate-400">Home Loads</div>
-              <div class="text-xl font-black text-blue-300">3.20 kW</div>
-            </div>
-            <div class="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30">
-              <i class="fa-solid fa-charging-station text-2xl text-purple-400 mb-2"></i>
-              <div class="text-xs text-slate-400">EV Wallbox</div>
-              <div class="text-xl font-black text-purple-300">7.40 kW</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4. SECURITY TAB -->
-      <section id="tab-security" class="hidden space-y-6">
-        <div class="flex items-center justify-between">
-          <h2 class="text-lg font-black text-slate-100 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-emerald-400"></i> AI Surveillance & Perimeter Shield</h2>
-          <div class="flex gap-2">
-            <button onclick="armSecurity('ARMED_AWAY')" class="px-3 py-1.5 bg-red-600/80 hover:bg-red-500 text-white font-bold text-xs rounded-xl"><i class="fa-solid fa-shield-cat mr-1"></i> Arm Away</button>
-            <button onclick="armSecurity('DISARMED')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl"><i class="fa-solid fa-lock-open mr-1"></i> Disarm</button>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="camerasGrid">
-          <!-- Camera Feed Cards -->
-        </div>
-      </section>
-
-      <!-- 5. SCENES & ROUTINES (AUTOMATIONS) TAB -->
-      <section id="tab-automations" class="hidden space-y-6">
-        <!-- Header -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h2 class="text-lg font-black text-slate-100 flex items-center gap-2">
-              <i class="fa-solid fa-wand-magic-sparkles text-emerald-400"></i> Scenes & Automation Routines
-            </h2>
-            <p class="text-xs text-slate-400">Event-driven multi-device orchestration & Trigger-Condition-Action (TCA) pipeline</p>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="loadScenes(); loadRules();" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl transition flex items-center gap-1.5 border border-slate-700">
-              <i class="fa-solid fa-rotate"></i> Refresh
-            </button>
-          </div>
-        </div>
-
-        <!-- 1-Tap Preset Scenes Grid -->
-        <div class="glass p-6 rounded-2xl">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="font-extrabold text-sm text-slate-200 flex items-center gap-2">
-              <i class="fa-solid fa-sparkles text-purple-400"></i> One-Tap Preset Scenes
-            </h3>
-            <span class="text-xs text-slate-400">Instant multi-device state transition</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="scenesGrid">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
-
-        <!-- Trigger-Condition-Action Automation Rules -->
-        <div class="glass p-6 rounded-2xl">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <h3 class="font-extrabold text-sm text-slate-200 flex items-center gap-2">
-                <i class="fa-solid fa-diagram-project text-emerald-400"></i> Autonomous Rules & Routines
+              <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-[#9c754d]"></i> Quick Scenes & Living Modes
               </h3>
-              <p class="text-xs text-slate-400">Edge-evaluated autonomous background workflows</p>
+              <span class="text-xs text-[#78716c]">Instant multi-device orchestration</span>
             </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="rulesGrid">
-            <!-- Dynamically populated -->
-          </div>
-        </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+              <button onclick="triggerScene('scene-movie-night')" class="p-4 rounded-2xl bg-[#faf9f6] border border-[#e8e5df] hover:bg-[#f3efe8] transition text-left cursor-pointer">
+                <div class="w-8 h-8 rounded-xl bg-[#faedd9] text-[#784e27] flex items-center justify-center mb-2.5 text-xs font-bold shadow-sm">
+                  <i class="fa-solid fa-film"></i>
+                </div>
+                <div class="font-bold text-xs text-[#262422]">Movie Night</div>
+                <div class="text-[11px] text-[#78716c] mt-0.5">Lights 20% • AC 22°C</div>
+              </button>
 
-        <!-- Automation Engine Status -->
-        <div class="glass p-6 rounded-2xl">
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="font-extrabold text-sm text-slate-200 flex items-center gap-2">
-              <i class="fa-solid fa-bolt-lightning text-amber-400"></i> Automation Engine Status
-            </h3>
-            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">EDGE ENGINE ACTIVE</span>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
-            <div class="p-3.5 rounded-xl bg-dark-900/80 border border-slate-800">
-              <div class="text-slate-400 text-[11px]">Active Rules</div>
-              <div class="text-emerald-400 font-bold text-base mt-1" id="activeRulesCount">4 Rules Running</div>
-            </div>
-            <div class="p-3.5 rounded-xl bg-dark-900/80 border border-slate-800">
-              <div class="text-slate-400 text-[11px]">Evaluation Cycle</div>
-              <div class="text-slate-200 font-bold text-base mt-1">Real-Time (10ms)</div>
-            </div>
-            <div class="p-3.5 rounded-xl bg-dark-900/80 border border-slate-800">
-              <div class="text-slate-400 text-[11px]">Offline Fallback</div>
-              <div class="text-blue-400 font-bold text-base mt-1">Autonomous Edge Mesh</div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <button onclick="triggerScene('scene-bedtime')" class="p-4 rounded-2xl bg-[#faf9f6] border border-[#e8e5df] hover:bg-[#f3efe8] transition text-left cursor-pointer">
+                <div class="w-8 h-8 rounded-xl bg-[#eeecf7] text-[#4d4875] flex items-center justify-center mb-2.5 text-xs font-bold shadow-sm">
+                  <i class="fa-solid fa-moon"></i>
+                </div>
+                <div class="font-bold text-xs text-[#262422]">Bedtime Sanctuary</div>
+                <div class="text-[11px] text-[#78716c] mt-0.5">Doors Lock • Sleep Mode</div>
+              </button>
 
-      <!-- 6. NATURAL LANGUAGE AI ASSISTANT -->
-      <section id="tab-ai-assistant" class="hidden space-y-6">
-        <div class="glass p-6 rounded-2xl max-w-3xl mx-auto">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-lg">
-              <i class="fa-solid fa-robot"></i>
-            </div>
-            <div>
-              <h2 class="font-extrabold text-sm text-slate-200">Natural Language Home Assistant</h2>
-              <p class="text-xs text-slate-400">Translates conversational instructions into verified platform actions</p>
+              <button onclick="quickCommand('dev-light-living', 'power', true)" class="p-4 rounded-2xl bg-[#faf9f6] border border-[#e8e5df] hover:bg-[#f3efe8] transition text-left cursor-pointer">
+                <div class="w-8 h-8 rounded-xl bg-[#f7eed9] text-[#805f28] flex items-center justify-center mb-2.5 text-xs font-bold shadow-sm">
+                  <i class="fa-solid fa-lightbulb"></i>
+                </div>
+                <div class="font-bold text-xs text-[#262422]">Warm Ambient</div>
+                <div class="text-[11px] text-[#78716c] mt-0.5">85% Warm Glow</div>
+              </button>
+
+              <button onclick="quickCommand('dev-garage-door', 'garage_door', 'CLOSED')" class="p-4 rounded-2xl bg-[#faf9f6] border border-[#e8e5df] hover:bg-[#f3efe8] transition text-left cursor-pointer">
+                <div class="w-8 h-8 rounded-xl bg-[#e6f0e9] text-[#336345] flex items-center justify-center mb-2.5 text-xs font-bold shadow-sm">
+                  <i class="fa-solid fa-warehouse"></i>
+                </div>
+                <div class="font-bold text-xs text-[#262422]">Close Garage</div>
+                <div class="text-[11px] text-[#78716c] mt-0.5">Secure garage bay</div>
+              </button>
             </div>
           </div>
 
-          <div id="chatHistory" class="space-y-3 h-80 overflow-y-auto p-4 rounded-xl bg-dark-900/90 border border-slate-800 text-xs font-medium">
-            <div class="flex gap-2.5">
-              <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] shrink-0 font-black">AI</div>
-              <div class="p-3 rounded-xl bg-slate-800/60 text-slate-200 max-w-[80%]">
-                Hello Dhanunjay! How can I assist you with your smart home today? You can say:
-                <div class="mt-2 space-y-1 text-slate-400 italic">
-                  • "Turn off all downstairs lights"<br>
-                  • "Set living room AC to 22 degrees"<br>
-                  • "What is my solar generation right now?"<br>
-                  • "Arm security in away mode"
+          <!-- Telemetry Graph with Pastel Color Styling & Live Activity -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="architect-card p-6 lg:col-span-2">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                  <i class="fa-solid fa-chart-area text-[#9c754d]"></i> Solar Yield vs Consumption (kW)
+                </h3>
+                <span class="text-xs text-[#78716c] font-medium">Real-time precision stream</span>
+              </div>
+              <div class="h-64">
+                <canvas id="energyChart"></canvas>
+              </div>
+            </div>
+
+            <div class="architect-card p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                  <i class="fa-solid fa-bolt text-[#8da9c4]"></i> Live Activity Feed
+                </h3>
+                <span class="w-2 h-2 rounded-full bg-[#6a997e]"></span>
+              </div>
+              <div id="liveTelemetryFeed" class="space-y-2.5 text-xs font-mono max-h-64 overflow-y-auto">
+                <div class="p-3 rounded-xl bg-[#faf9f6] border border-[#e8e5df] text-[#3a362f]">
+                  <span class="text-[#9c6a3b] font-bold">[SOLAR_MPPT]</span> 4.85 kW yield • Inverter 41.5°C
+                </div>
+                <div class="p-3 rounded-xl bg-[#faf9f6] border border-[#e8e5df] text-[#3a362f]">
+                  <span class="text-[#416282] font-bold">[EV_WALLBOX]</span> 7.4 kW charging • Tesla Model 3
+                </div>
+                <div class="p-3 rounded-xl bg-[#faf9f6] border border-[#e8e5df] text-[#3a362f]">
+                  <span class="text-[#3d6e4f] font-bold">[HVAC_CLIMATE]</span> Room 24.2°C • Target 23.0°C
+                </div>
+                <div class="p-3 rounded-xl bg-[#faf9f6] border border-[#e8e5df] text-[#3a362f]">
+                  <span class="text-[#55527a] font-bold">[RADAR_PRESENCE]</span> Living Room Occupied
                 </div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="mt-4 flex gap-2">
-            <input id="aiInput" type="text" placeholder="Type a smart home command..." class="flex-1 px-4 py-3 rounded-xl bg-dark-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" onkeydown="if(event.key==='Enter') sendAiCommand()">
-            <button onclick="sendAiCommand()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-2">
-              <i class="fa-solid fa-paper-plane"></i> Send
+        <!-- =================================================================== -->
+        <!-- 2. DEVICES & CONTROLS TAB -->
+        <!-- =================================================================== -->
+        <section id="tab-devices" class="hidden space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-[#8e8677]"></i> Smart Devices & Room Controls
+              </h2>
+              <p class="text-xs text-[#78716c]">Extensible Trait Capability Architecture (TCA)</p>
+            </div>
+            <button onclick="loadDevices()" class="px-3.5 py-1.5 bg-white hover:bg-[#faf9f6] text-[#3a362f] font-bold text-xs rounded-2xl transition flex items-center gap-1.5 border border-[#dcd7cd] cursor-pointer shadow-sm">
+              <i class="fa-solid fa-rotate text-xs"></i> Refresh
             </button>
           </div>
-        </div>
-      </section>
 
-      <!-- 6. AUDIT & GOVERNANCE TAB -->
-      <section id="tab-audit" class="hidden space-y-6">
-        <div class="glass p-6 rounded-2xl">
-          <h2 class="text-lg font-black text-slate-100 flex items-center gap-2 mb-4"><i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> Tamper-Evident Audit & Access Ledger</h2>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="bg-dark-900/90 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-800">
-                <tr>
-                  <th class="p-3">Timestamp</th>
-                  <th class="p-3">Actor</th>
-                  <th class="p-3">Action</th>
-                  <th class="p-3">Target Resource</th>
-                  <th class="p-3">Result</th>
-                </tr>
-              </thead>
-              <tbody id="auditTableBody" class="divide-y divide-slate-800/60 font-mono text-[11px]">
-                <!-- Populated via JS -->
-              </tbody>
-            </table>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="devicesGrid">
+            <!-- Dynamically Populated via JS -->
           </div>
-        </div>
-      </section>
+        </section>
 
-    </main>
+        <!-- =================================================================== -->
+        <!-- 3. SOLAR & ENERGY FLOW TAB -->
+        <!-- =================================================================== -->
+        <section id="tab-energy" class="hidden space-y-6">
+          <div class="architect-card p-6">
+            <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2 mb-5">
+              <i class="fa-solid fa-solar-panel text-[#8e8677]"></i> Whole-Home Clean Energy Architecture
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+              <div class="p-5 rounded-2xl bg-[#faedd9]/60 border border-[#edd5be]">
+                <i class="fa-solid fa-sun text-2xl text-[#9c6a3b] mb-2"></i>
+                <div class="text-xs text-[#78716c] font-medium">Rooftop Solar PV</div>
+                <div class="text-xl font-bold text-[#262422] mt-1">4.85 kW</div>
+              </div>
+              <div class="p-5 rounded-2xl bg-[#e6f0e9]/60 border border-[#cbe0d1]">
+                <i class="fa-solid fa-car-battery text-2xl text-[#3d6e4f] mb-2"></i>
+                <div class="text-xs text-[#78716c] font-medium">Battery Reserve (15kWh)</div>
+                <div class="text-xl font-bold text-[#262422] mt-1">88.5% (+1.2kW)</div>
+              </div>
+              <div class="p-5 rounded-2xl bg-[#e3ecf5]/60 border border-[#c8daf0]">
+                <i class="fa-solid fa-house-signal text-2xl text-[#416282] mb-2"></i>
+                <div class="text-xs text-[#78716c] font-medium">Home Live Load</div>
+                <div class="text-xl font-bold text-[#262422] mt-1">3.20 kW</div>
+              </div>
+              <div class="p-5 rounded-2xl bg-[#eeecf7]/60 border border-[#d8d5eb]">
+                <i class="fa-solid fa-charging-station text-2xl text-[#55527a] mb-2"></i>
+                <div class="text-xs text-[#78716c] font-medium">EV Wallbox Fast Charger</div>
+                <div class="text-xl font-bold text-[#262422] mt-1">7.40 kW</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 4. SECURITY & VISION TAB -->
+        <!-- =================================================================== -->
+        <section id="tab-security" class="hidden space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-[#8e8677]"></i> AI Surveillance & Perimeter Shield
+              </h2>
+              <p class="text-xs text-[#78716c]">Edge WebRTC feeds with computer vision analytics</p>
+            </div>
+            <div class="flex gap-2.5">
+              <button onclick="armSecurity('ARMED_AWAY')" class="px-4 py-2 bg-[#d95d50] hover:bg-[#c24b3f] text-white font-bold text-xs rounded-2xl transition flex items-center gap-1.5 shadow-sm cursor-pointer">
+                <i class="fa-solid fa-shield"></i> Arm Away
+              </button>
+              <button onclick="armSecurity('DISARMED')" class="px-4 py-2 bg-white hover:bg-[#faf9f6] text-[#3a362f] font-bold text-xs rounded-2xl transition border border-[#dcd7cd] cursor-pointer shadow-sm">
+                <i class="fa-solid fa-lock-open"></i> Disarm
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="camerasGrid">
+            <!-- Camera Feed Cards populated via JS -->
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 5. SCENES & ROUTINES (AUTOMATIONS) TAB -->
+        <!-- =================================================================== -->
+        <section id="tab-automations" class="hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-[#9c754d]"></i> Scenes & Automation Routines
+              </h2>
+              <p class="text-xs text-[#78716c]">Autonomous Trigger-Condition-Action (TCA) pipeline</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="loadScenes(); loadRules();" class="px-3.5 py-1.5 bg-white hover:bg-[#faf9f6] text-[#3a362f] font-bold text-xs rounded-2xl transition flex items-center gap-1.5 border border-[#dcd7cd] cursor-pointer shadow-sm">
+                <i class="fa-solid fa-rotate"></i> Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- One-Tap Preset Scenes Grid -->
+          <div class="architect-card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-[#9c754d]"></i> One-Tap Preset Scenes
+              </h3>
+              <span class="text-xs text-[#78716c]">Instant multi-device state transition</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="scenesGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Trigger-Condition-Action Automation Rules -->
+          <div class="architect-card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                  <i class="fa-solid fa-diagram-project text-[#3d6e4f]"></i> Autonomous Rules & Routines
+                </h3>
+                <p class="text-xs text-[#78716c]">Edge-evaluated autonomous background workflows</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="rulesGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Automation Engine Status -->
+          <div class="architect-card p-6">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-[#9c754d]"></i> Automation Engine Status
+              </h3>
+              <span class="px-2.5 py-0.5 rounded-full bg-[#e6f0e9] text-[#3d6e4f] text-[11px] font-bold border border-[#cbe0d1]">EDGE ENGINE ACTIVE</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
+              <div class="p-3.5 rounded-2xl bg-[#faf9f6] border border-[#e8e5df]">
+                <div class="text-[#78716c] text-[11px]">Active Rules</div>
+                <div class="text-[#3d6e4f] font-bold text-base mt-1" id="activeRulesCount">4 Rules Running</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-[#faf9f6] border border-[#e8e5df]">
+                <div class="text-[#78716c] text-[11px]">Evaluation Cycle</div>
+                <div class="text-[#262422] font-bold text-base mt-1">Real-Time (10ms)</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-[#faf9f6] border border-[#e8e5df]">
+                <div class="text-[#78716c] text-[11px]">Offline Fallback</div>
+                <div class="text-[#416282] font-bold text-base mt-1">Autonomous Edge Mesh</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 6. NATURAL LANGUAGE AI ASSISTANT -->
+        <!-- =================================================================== -->
+        <section id="tab-ai-assistant" class="hidden space-y-6">
+          <div class="architect-card p-6 max-w-3xl mx-auto">
+            <div class="flex items-center gap-3.5 mb-5">
+              <div class="w-10 h-10 rounded-2xl bg-[#3a362f] text-white flex items-center justify-center font-bold text-base shadow-sm">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <div>
+                <h2 class="font-bold text-sm text-[#262422]">Natural Language Home Assistant</h2>
+                <p class="text-xs text-[#78716c]">Conversational instructions executed into smart device actions</p>
+              </div>
+            </div>
+
+            <div id="chatHistory" class="space-y-3 h-80 overflow-y-auto p-4 rounded-2xl bg-[#faf9f6] border border-[#e8e5df] text-xs font-medium">
+              <div class="flex gap-2.5">
+                <div class="w-7 h-7 rounded-full bg-[#3a362f] text-white flex items-center justify-center text-[10px] shrink-0 font-bold">AI</div>
+                <div class="p-3.5 rounded-2xl bg-white border border-[#e5e1d8] text-[#262422] max-w-[85%] leading-relaxed shadow-sm">
+                  Hello! How can I assist you with your Smart Home today? You can try saying:
+                  <div class="mt-2.5 space-y-1.5 text-[#78716c] italic">
+                    • "Turn off all living room lights"<br>
+                    • "Set climate temperature to 22 degrees"<br>
+                    • "What is my solar generation right now?"<br>
+                    • "Arm security in away mode"
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 flex gap-2.5">
+              <input id="aiInput" type="text" placeholder="Type a smart home command (e.g. Set living room AC to 22C)..." class="clean-input flex-1 px-4 py-3 text-xs text-[#262422]" onkeydown="if(event.key==='Enter') sendAiCommand()">
+              <button onclick="sendAiCommand()" class="px-6 py-3 bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs rounded-2xl transition flex items-center gap-2 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-paper-plane"></i> Send
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- 7. AUDIT & GOVERNANCE TAB -->
+        <!-- =================================================================== -->
+        <section id="tab-audit" class="hidden space-y-6">
+          <div class="architect-card p-6">
+            <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2 mb-4">
+              <i class="fa-solid fa-clock-rotate-left text-[#8e8677]"></i> Access & Audit Activity Ledger
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-[#faf9f6] text-[#78716c] font-bold uppercase tracking-wider border-b border-[#e8e5df]">
+                  <tr>
+                    <th class="p-3.5">Timestamp</th>
+                    <th class="p-3.5">Actor</th>
+                    <th class="p-3.5">Action</th>
+                    <th class="p-3.5">Target Resource</th>
+                    <th class="p-3.5">Result</th>
+                  </tr>
+                </thead>
+                <tbody id="auditTableBody" class="divide-y divide-[#e8e5df] font-mono text-[11px]">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
   </div>
-</div>
 
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT LOGIC & API INTEGRATION -->
+  <!-- ========================================================================= -->
   <script>
     const API_BASE = (window.location.protocol.startsWith('http')) ? '' : 'http://localhost:8000';
     let currentAuthToken = null;
     let currentUser = null;
     let energyChart = null;
 
+    // Toast Notification System
     function showToast(title, message, icon = 'fa-check') {
       let toastContainer = document.getElementById('toastContainer');
       if (!toastContainer) {
@@ -529,23 +733,24 @@
         document.body.appendChild(toastContainer);
       }
       const toast = document.createElement('div');
-      toast.className = 'glass p-4 rounded-2xl flex items-center gap-3 shadow-2xl border border-emerald-500/40 text-xs text-slate-100 pointer-events-auto transition-all duration-300';
+      toast.className = 'architect-card p-4 rounded-2xl flex items-center gap-3 shadow-xl border border-[#dcd7cd] text-xs text-[#262422] pointer-events-auto transition-all duration-200 bg-white';
       toast.innerHTML = `
-        <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+        <div class="w-8 h-8 rounded-xl bg-[#f5f3ee] text-[#3a362f] flex items-center justify-center font-bold">
           <i class="fa-solid ${icon}"></i>
         </div>
         <div>
-          <div class="font-bold text-slate-100">${title}</div>
-          <div class="text-[11px] text-slate-400">${message}</div>
+          <div class="font-bold text-[#262422]">${title}</div>
+          <div class="text-[11px] text-[#78716c]">${message}</div>
         </div>
       `;
       toastContainer.appendChild(toast);
       setTimeout(() => {
         toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
+        setTimeout(() => toast.remove(), 200);
       }, 3500);
     }
 
+    // Tab Navigation Switcher
     function switchTab(tabId) {
       document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
       const targetSec = document.getElementById('tab-' + tabId);
@@ -553,11 +758,11 @@
         targetSec.classList.remove('hidden');
       }
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.className = "tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 hover:bg-slate-800/60 hover:text-slate-200";
+        btn.className = "tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold text-[#57534e] hover:bg-[#f5f3ee] hover:text-[#262422] transition cursor-pointer";
       });
       const activeBtn = document.getElementById('tab-btn-' + tabId);
       if (activeBtn) {
-        activeBtn.className = "tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
+        activeBtn.className = "tab-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-bold bg-[#3a362f] text-white transition cursor-pointer shadow-sm";
       }
       if (tabId === 'automations') {
         loadScenes();
@@ -576,10 +781,10 @@
       const icon = document.getElementById('togglePasswordIcon');
       if (pwd.type === 'password') {
         pwd.type = 'text';
-        icon.className = 'fa-solid fa-eye-slash';
+        icon.className = 'fa-regular fa-eye-slash';
       } else {
         pwd.type = 'password';
-        icon.className = 'fa-solid fa-eye';
+        icon.className = 'fa-regular fa-eye';
       }
     }
 
@@ -590,6 +795,7 @@
       if (errorAlert) errorAlert.classList.add('hidden');
     }
 
+    // Login Handler
     async function handleLoginSubmit(event) {
       event.preventDefault();
       const emailInput = document.getElementById('loginEmail');
@@ -608,7 +814,7 @@
       }
 
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Signing in...`;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> Signing in...`;
       if (errorAlert) errorAlert.classList.add('hidden');
 
       try {
@@ -628,13 +834,23 @@
           document.getElementById('loginView').classList.add('hidden');
           document.getElementById('appDashboard').classList.remove('hidden');
 
-          // Update header username
+          // Update header username and initials
           const nameDisplay = document.getElementById('userNameDisplay');
+          const welcomeName = document.getElementById('welcomeUserName');
+          const avatar = document.getElementById('userAvatar');
+          
           if (nameDisplay) {
             nameDisplay.textContent = `${currentUser.full_name} (${currentUser.role ? currentUser.role.replace(/_/g, ' ') : 'PLATFORM OWNER'})`;
           }
+          if (welcomeName) {
+            welcomeName.textContent = currentUser.full_name.split(' ')[0] || 'Resident';
+          }
+          if (avatar) {
+            const initials = currentUser.full_name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            avatar.textContent = initials || 'DN';
+          }
 
-          showToast('Login Successful', `Welcome, ${currentUser.full_name}!`, 'fa-circle-check');
+          showToast('Welcome Back', `Signed in as ${currentUser.full_name}`, 'fa-circle-check');
 
           initEnergyChart();
           loadDevices();
@@ -653,10 +869,11 @@
         if (errorAlert) errorAlert.classList.remove('hidden');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i><span>Sign In to Dashboard</span>`;
+        submitBtn.innerHTML = `<i class="fa-solid fa-arrow-right-to-bracket"></i><span>Sign In to Dashboard</span>`;
       }
     }
 
+    // Logout Handler
     function logout() {
       currentAuthToken = null;
       currentUser = null;
@@ -671,6 +888,7 @@
       const errorAlert = document.getElementById('loginErrorAlert');
       if (errorAlert) errorAlert.classList.add('hidden');
 
+      showToast('Signed Out', 'You have been logged out. Please sign in again.', 'fa-arrow-right-from-bracket');
     }
 
     async function setHomeMode(mode) {
@@ -681,10 +899,10 @@
           body: JSON.stringify({ mode: mode })
         });
         document.querySelectorAll('[id^="btn-mode-"]').forEach(btn => {
-          btn.className = "px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition flex items-center gap-1.5";
+          btn.className = "px-3.5 py-1.5 rounded-xl text-[#78716c] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer";
         });
-        document.getElementById('btn-mode-' + mode).className = "px-3 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold transition flex items-center gap-1.5";
-        showToast('Home Mode Changed', `Switched mode to ${mode}`);
+        document.getElementById('btn-mode-' + mode).className = "px-3.5 py-1.5 rounded-xl bg-white text-[#262422] font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer border border-[#e2ded5]";
+        showToast('Home Mode Updated', `Switched mode to ${mode}`, 'fa-house');
         loadAuditLogs();
       } catch (err) {
         console.error("Mode update failed:", err);
@@ -698,7 +916,7 @@
           headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + currentAuthToken },
           body: JSON.stringify({ command: command, value: value })
         });
-        showToast('Device Command Sent', `${deviceId} -> ${command}: ${value}`);
+        showToast('Command Executed', `${deviceId} -> ${command}: ${value}`, 'fa-sliders');
         loadDevices();
         loadAuditLogs();
       } catch (err) {
@@ -713,7 +931,7 @@
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         if (res.ok) {
-          showToast('Scene Activated', `${sceneId} triggered successfully!`, 'fa-wand-magic-sparkles');
+          showToast('Scene Activated', `${sceneId} applied successfully!`, 'fa-wand-magic-sparkles');
           loadDevices();
           loadAuditLogs();
         } else {
@@ -735,41 +953,41 @@
         grid.innerHTML = '';
         
         const iconMap = {
-          'film': { icon: 'fa-film', color: 'purple' },
-          'moon': { icon: 'fa-moon', color: 'blue' },
-          'sun': { icon: 'fa-sun', color: 'amber' },
-          'person-walking-luggage': { icon: 'fa-person-walking-luggage', color: 'emerald' },
-          'sparkles': { icon: 'fa-wand-magic-sparkles', color: 'teal' }
+          'film': { icon: 'fa-film', bg: '#faedd9', color: '#784e27' },
+          'moon': { icon: 'fa-moon', bg: '#eeecf7', color: '#4d4875' },
+          'sun': { icon: 'fa-sun', bg: '#f7eed9', color: '#805f28' },
+          'person-walking-luggage': { icon: 'fa-person-walking-luggage', bg: '#e6f0e9', color: '#336345' },
+          'sparkles': { icon: 'fa-wand-magic-sparkles', bg: '#e3ecf5', color: '#416282' }
         };
 
         scenes.forEach(scene => {
-          const style = iconMap[scene.icon] || { icon: 'fa-wand-magic-sparkles', color: 'emerald' };
+          const style = iconMap[scene.icon] || { icon: 'fa-wand-magic-sparkles', bg: '#faedd9', color: '#784e27' };
           const card = document.createElement('div');
-          card.className = "glass p-5 rounded-2xl flex flex-col justify-between hover:border-slate-700 transition";
+          card.className = "architect-card p-5 flex flex-col justify-between";
           card.innerHTML = `
             <div>
               <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-xl bg-${style.color}-500/20 text-${style.color}-400 flex items-center justify-center text-base">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm shadow-sm" style="background-color: ${style.bg}; color: ${style.color}">
                   <i class="fa-solid ${style.icon}"></i>
                 </div>
-                <span class="px-2 py-0.5 rounded-full bg-slate-800 text-[10px] font-mono text-slate-400 border border-slate-700/60">
+                <span class="px-2.5 py-0.5 rounded-full bg-[#faf9f6] text-[10px] font-mono text-[#78716c] border border-[#e8e5df]">
                   ${scene.actions.length} Actions
                 </span>
               </div>
-              <h4 class="font-bold text-xs text-slate-100">${scene.name}</h4>
-              <p class="text-[11px] text-slate-400 mt-1">${scene.description || 'Custom multi-device scene'}</p>
+              <h4 class="font-bold text-xs text-[#262422]">${scene.name}</h4>
+              <p class="text-[11px] text-[#78716c] mt-1">${scene.description || 'Multi-device scene preset'}</p>
               
               <div class="mt-3 space-y-1">
                 ${scene.actions.map(act => `
-                  <div class="text-[10px] font-mono text-slate-400 flex items-center gap-1.5 bg-dark-900/60 px-2 py-1 rounded-lg">
-                    <i class="fa-solid fa-chevron-right text-[8px] text-emerald-400"></i>
-                    <span class="text-slate-300 font-semibold">${act.target_id}</span>: ${Object.entries(act.parameters).map(([k,v]) => `${k}=${v}`).join(', ')}
+                  <div class="text-[10px] font-mono text-[#57534e] flex items-center gap-1.5 bg-[#faf9f6] px-2.5 py-1 rounded-xl border border-[#e8e5df]">
+                    <i class="fa-solid fa-chevron-right text-[8px] text-[#a8a29e]"></i>
+                    <span class="text-[#262422] font-semibold">${act.target_id}</span>: ${Object.entries(act.parameters).map(([k,v]) => `${k}=${v}`).join(', ')}
                   </div>
                 `).join('')}
               </div>
             </div>
 
-            <button onclick="triggerScene('${scene.scene_id}')" class="mt-4 w-full py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-2">
+            <button onclick="triggerScene('${scene.scene_id}')" class="mt-4 w-full py-2.5 bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs rounded-2xl shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
               <i class="fa-solid fa-play text-[10px]"></i> Activate Scene
             </button>
           `;
@@ -796,50 +1014,50 @@
         rules.forEach(rule => {
           if (rule.is_enabled) activeCount++;
           const card = document.createElement('div');
-          card.className = "glass p-5 rounded-2xl flex flex-col justify-between";
+          card.className = "architect-card p-5 flex flex-col justify-between";
           
           let triggerLabel = "";
           if (rule.trigger_type === "sensor_threshold") {
-            triggerLabel = `<i class="fa-solid fa-gauge text-amber-400 mr-1"></i> Sensor: ${rule.trigger_config.condition || rule.trigger_config.sensor || 'Threshold'}`;
+            triggerLabel = `<i class="fa-solid fa-gauge text-[#9c6a3b] mr-1"></i> Sensor: ${rule.trigger_config.condition || rule.trigger_config.sensor || 'Threshold'}`;
           } else if (rule.trigger_type === "time_cron") {
-            triggerLabel = `<i class="fa-solid fa-clock text-blue-400 mr-1"></i> Schedule: ${rule.trigger_config.schedule || rule.trigger_config.cron || 'Cron'}`;
+            triggerLabel = `<i class="fa-solid fa-clock text-[#416282] mr-1"></i> Schedule: ${rule.trigger_config.schedule || rule.trigger_config.cron || 'Cron'}`;
           } else {
-            triggerLabel = `<i class="fa-solid fa-bolt text-purple-400 mr-1"></i> Event: ${rule.trigger_config.event || 'System Event'}`;
+            triggerLabel = `<i class="fa-solid fa-bolt text-[#55527a] mr-1"></i> Event: ${rule.trigger_config.event || 'System Event'}`;
           }
 
           card.innerHTML = `
             <div>
               <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2.5">
-                  <div class="w-8 h-8 rounded-xl ${rule.is_enabled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'} flex items-center justify-center text-xs">
-                    <i class="fa-solid fa-bolt-lightning"></i>
+                  <div class="w-9 h-9 rounded-xl ${rule.is_enabled ? 'bg-[#3a362f] text-white' : 'bg-[#f5f3ee] text-[#a8a29e]'} flex items-center justify-center text-xs shadow-sm">
+                    <i class="fa-solid fa-bolt"></i>
                   </div>
                   <div>
-                    <h4 class="font-bold text-xs text-slate-100">${rule.name}</h4>
-                    <span class="text-[10px] font-mono ${rule.is_enabled ? 'text-emerald-400' : 'text-slate-500'} font-semibold">
-                      ${rule.is_enabled ? '● RUNNING' : '○ PAUSED'}
+                    <h4 class="font-bold text-xs text-[#262422]">${rule.name}</h4>
+                    <span class="text-[10px] font-mono ${rule.is_enabled ? 'text-[#3d6e4f] font-bold' : 'text-[#a8a29e] font-medium'}">
+                      ${rule.is_enabled ? '● ACTIVE' : '○ PAUSED'}
                     </span>
                   </div>
                 </div>
-                <button onclick="toggleRule('${rule.rule_id}')" class="w-10 h-6 rounded-full transition p-0.5 ${rule.is_enabled ? 'bg-emerald-500' : 'bg-slate-700'}">
-                  <div class="w-5 h-5 rounded-full bg-white transition transform ${rule.is_enabled ? 'translate-x-4' : ''}"></div>
+                <button onclick="toggleRule('${rule.rule_id}')" class="w-11 h-6 rounded-full transition p-0.5 ${rule.is_enabled ? 'bg-[#6a997e]' : 'bg-[#dcd7cd]'} cursor-pointer">
+                  <div class="w-5 h-5 rounded-full bg-white transition transform ${rule.is_enabled ? 'translate-x-5' : ''} shadow-sm"></div>
                 </button>
               </div>
 
-              <p class="text-xs text-slate-400 mb-3">${rule.description || ''}</p>
+              <p class="text-xs text-[#57534e] mb-3">${rule.description || ''}</p>
 
-              <div class="p-2.5 rounded-xl bg-dark-900/80 border border-slate-800/80 text-[11px] font-mono space-y-1 mb-4">
-                <div class="text-slate-300">${triggerLabel}</div>
-                <div class="text-slate-500 flex items-center gap-1.5">
-                  <i class="fa-solid fa-arrow-turn-down-right text-[10px] text-emerald-400"></i>
+              <div class="p-3 rounded-2xl bg-[#faf9f6] border border-[#e8e5df] text-[11px] font-mono space-y-1 mb-4">
+                <div class="text-[#262422]">${triggerLabel}</div>
+                <div class="text-[#78716c] flex items-center gap-1.5">
+                  <i class="fa-solid fa-arrow-turn-down-right text-[10px] text-[#a8a29e]"></i>
                   <span>Action: ${rule.actions.map(a => a.target_id).join(', ')}</span>
                 </div>
               </div>
             </div>
 
             <div class="flex gap-2">
-              <button onclick="runRule('${rule.rule_id}')" class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-700">
-                <i class="fa-solid fa-play text-[10px] text-emerald-400"></i> Test Run
+              <button onclick="runRule('${rule.rule_id}')" class="flex-1 py-2 bg-white hover:bg-[#faf9f6] text-[#3a362f] font-bold text-xs rounded-2xl transition flex items-center justify-center gap-1.5 border border-[#dcd7cd] cursor-pointer shadow-sm">
+                <i class="fa-solid fa-play text-[10px] text-[#78716c]"></i> Test Run
               </button>
             </div>
           `;
@@ -847,7 +1065,7 @@
         });
 
         if (activeCountEl) {
-          activeCountEl.textContent = `${activeCount} / ${rules.length} Rules Active`;
+          activeCountEl.textContent = `${activeCount} / ${rules.length} Rules Running`;
         }
       } catch (err) {
         console.error("Load rules failed:", err);
@@ -861,7 +1079,7 @@
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
         const data = await res.json();
-        showToast('Rule Updated', `Rule is now ${data.is_enabled ? 'Active' : 'Disabled'}`);
+        showToast('Rule Updated', `Rule is now ${data.is_enabled ? 'Active' : 'Disabled'}`, 'fa-sliders');
         loadRules();
       } catch (err) {
         console.error("Toggle rule failed:", err);
@@ -874,7 +1092,7 @@
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + currentAuthToken }
         });
-        showToast('Rule Executed', `Automation routine triggered successfully!`);
+        showToast('Routine Executed', `Automation executed successfully!`, 'fa-bolt');
         loadDevices();
         loadAuditLogs();
       } catch (err) {
@@ -894,26 +1112,64 @@
         devices.forEach(dev => {
           const isPowerOn = dev.state.power !== undefined ? dev.state.power : (dev.state.locked ? false : true);
           const card = document.createElement('div');
-          card.className = "glass p-5 rounded-2xl flex flex-col justify-between";
+          card.className = "architect-card p-5 flex flex-col justify-between";
+          
+          let controlsHtml = '';
+          if (dev.category === 'lighting') {
+            const brightness = dev.state.brightness || 80;
+            controlsHtml = `
+              <div class="mt-3 pt-3 border-t border-[#e8e5df]">
+                <div class="flex justify-between items-center text-[11px] mb-1.5 text-[#57534e] font-medium">
+                  <span>Brightness</span>
+                  <span class="font-bold text-[#805f28]" id="val-${dev.device_id}">${brightness}%</span>
+                </div>
+                <input type="range" min="1" max="100" value="${brightness}" class="w-full cursor-pointer" oninput="document.getElementById('val-${dev.device_id}').textContent=this.value+'%'" onchange="quickCommand('${dev.device_id}', 'brightness', parseInt(this.value))">
+                <div class="flex gap-1.5 mt-2.5">
+                  <button onclick="quickCommand('${dev.device_id}', 'brightness', 25)" class="flex-1 py-1 bg-[#faf9f6] hover:bg-[#f3efe8] rounded-xl text-[10px] font-bold text-[#57534e] border border-[#e5e1d8] cursor-pointer">25%</button>
+                  <button onclick="quickCommand('${dev.device_id}', 'brightness', 50)" class="flex-1 py-1 bg-[#faf9f6] hover:bg-[#f3efe8] rounded-xl text-[10px] font-bold text-[#57534e] border border-[#e5e1d8] cursor-pointer">50%</button>
+                  <button onclick="quickCommand('${dev.device_id}', 'brightness', 100)" class="flex-1 py-1 bg-[#faf9f6] hover:bg-[#f3efe8] rounded-xl text-[10px] font-bold text-[#57534e] border border-[#e5e1d8] cursor-pointer">100%</button>
+                </div>
+              </div>
+            `;
+          } else if (dev.category === 'climate') {
+            const temp = dev.state.target_temperature || 23.0;
+            controlsHtml = `
+              <div class="mt-3 pt-3 border-t border-[#e8e5df]">
+                <div class="flex justify-between items-center text-[11px] mb-1.5 text-[#57534e] font-medium">
+                  <span>Target Temperature</span>
+                  <span class="font-bold text-[#416282]" id="val-${dev.device_id}">${temp}°C</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="quickCommand('${dev.device_id}', 'temperature', ${Math.max(16, temp - 1)})" class="w-8 h-8 rounded-xl bg-[#faf9f6] hover:bg-[#f3efe8] border border-[#dcd7cd] flex items-center justify-center text-xs text-[#3a362f] cursor-pointer"><i class="fa-solid fa-minus"></i></button>
+                  <div class="flex-1 text-center font-bold text-sm text-[#262422]">${temp}°C</div>
+                  <button onclick="quickCommand('${dev.device_id}', 'temperature', ${Math.min(30, temp + 1)})" class="w-8 h-8 rounded-xl bg-[#faf9f6] hover:bg-[#f3efe8] border border-[#dcd7cd] flex items-center justify-center text-xs text-[#3a362f] cursor-pointer"><i class="fa-solid fa-plus"></i></button>
+                </div>
+              </div>
+            `;
+          }
+
           card.innerHTML = `
             <div>
               <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center gap-2.5">
-                  <div class="w-9 h-9 rounded-xl ${isPowerOn ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'} flex items-center justify-center">
-                    <i class="fa-solid ${dev.category === 'lighting' ? 'fa-lightbulb' : dev.category === 'climate' ? 'fa-fan' : dev.category === 'energy' ? 'fa-bolt' : 'fa-plug'}"></i>
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-2xl ${isPowerOn ? 'bg-[#faedd9] text-[#784e27]' : 'bg-[#f5f3ee] text-[#a8a29e]'} flex items-center justify-center text-base shadow-sm">
+                    <i class="fa-solid ${dev.category === 'lighting' ? 'fa-lightbulb' : dev.category === 'climate' ? 'fa-fan' : dev.category === 'energy' ? 'fa-solar-panel' : 'fa-plug'}"></i>
                   </div>
                   <div>
-                    <h3 class="font-bold text-xs text-slate-100">${dev.name}</h3>
-                    <p class="text-[10px] text-slate-400 uppercase font-mono">${dev.protocol} • ${dev.status}</p>
+                    <h3 class="font-bold text-xs text-[#262422]">${dev.name}</h3>
+                    <p class="text-[10px] text-[#78716c] uppercase font-mono">${dev.protocol} • ${dev.status}</p>
                   </div>
                 </div>
-                <button onclick="quickCommand('${dev.device_id}', 'power', ${!isPowerOn})" class="w-10 h-6 rounded-full transition p-0.5 ${isPowerOn ? 'bg-emerald-500' : 'bg-slate-700'}">
-                  <div class="w-5 h-5 rounded-full bg-white transition transform ${isPowerOn ? 'translate-x-4' : ''}"></div>
+                <button onclick="quickCommand('${dev.device_id}', 'power', ${!isPowerOn})" class="w-11 h-6 rounded-full transition p-0.5 ${isPowerOn ? 'bg-[#6a997e]' : 'bg-[#dcd7cd]'} cursor-pointer">
+                  <div class="w-5 h-5 rounded-full bg-white transition transform ${isPowerOn ? 'translate-x-5' : ''} shadow-sm"></div>
                 </button>
               </div>
-              <div class="text-xs text-slate-300 mt-2 space-y-1 font-mono">
-                ${Object.entries(dev.state).map(([k, v]) => `<div><span class="text-slate-500">${k}:</span> <span class="font-bold">${v}</span></div>`).join('')}
+
+              <div class="text-xs text-[#57534e] mt-2 space-y-1.5 font-mono p-3 rounded-2xl bg-[#faf9f6] border border-[#e8e5df]">
+                ${Object.entries(dev.state).map(([k, v]) => `<div class="flex justify-between"><span class="text-[#78716c]">${k}:</span> <span class="font-bold text-[#262422]">${v}</span></div>`).join('')}
               </div>
+
+              ${controlsHtml}
             </div>
           `;
           grid.appendChild(card);
@@ -934,16 +1190,16 @@
         grid.innerHTML = '';
         cameras.forEach(cam => {
           const card = document.createElement('div');
-          card.className = "glass rounded-2xl overflow-hidden";
+          card.className = "architect-card rounded-2xl overflow-hidden border border-[#e8e5df]";
           card.innerHTML = `
-            <div class="relative h-44 bg-slate-900">
+            <div class="relative h-48 bg-[#262422]">
               <img src="${cam.thumbnail_url}" alt="${cam.name}" class="w-full h-full object-cover">
-              <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-red-600/90 text-white font-black text-[10px] flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> LIVE
+              <div class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-full bg-[#d95d50] text-white font-bold text-[10px] flex items-center gap-1.5 shadow">
+                <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> LIVE STREAM
               </div>
-              <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-[10px] bg-dark-950/80 backdrop-blur px-3 py-1.5 rounded-xl border border-slate-800">
-                <span class="font-bold text-slate-200">${cam.name}</span>
-                <span class="text-emerald-400 font-mono">${cam.ai_detection_labels.join(', ')}</span>
+              <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center text-[11px] bg-white/95 backdrop-blur px-3.5 py-2 rounded-2xl border border-[#e8e5df] shadow-sm">
+                <span class="font-bold text-[#262422]">${cam.name}</span>
+                <span class="text-[#8e6e53] font-mono font-bold">${cam.ai_detection_labels.join(' • ')}</span>
               </div>
             </div>
           `;
@@ -965,13 +1221,13 @@
         tbody.innerHTML = '';
         logs.forEach(l => {
           const tr = document.createElement('tr');
-          tr.className = "hover:bg-slate-800/40";
+          tr.className = "hover:bg-[#faf9f6] transition";
           tr.innerHTML = `
-            <td class="p-3 text-slate-400">${new Date(l.timestamp).toLocaleTimeString()}</td>
-            <td class="p-3 text-slate-200 font-bold">${l.actor_name}</td>
-            <td class="p-3 text-emerald-400">${l.action}</td>
-            <td class="p-3 text-slate-300">${l.target_resource}</td>
-            <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400">${l.result}</span></td>
+            <td class="p-3 text-[#78716c]">${new Date(l.timestamp).toLocaleTimeString()}</td>
+            <td class="p-3 text-[#262422] font-bold">${l.actor_name}</td>
+            <td class="p-3 text-[#735233] font-bold">${l.action}</td>
+            <td class="p-3 text-[#57534e]">${l.target_resource}</td>
+            <td class="p-3"><span class="px-2.5 py-0.5 rounded-full bg-[#e6f0e9] text-[#3d6e4f] border border-[#cbe0d1] text-[10px] font-bold">${l.result}</span></td>
           `;
           tbody.appendChild(tr);
         });
@@ -988,8 +1244,8 @@
       const history = document.getElementById('chatHistory');
       history.innerHTML += `
         <div class="flex gap-2.5 justify-end">
-          <div class="p-3 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-200 max-w-[80%]">${text}</div>
-          <div class="w-6 h-6 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center text-[10px] shrink-0 font-bold">ME</div>
+          <div class="p-3.5 rounded-2xl bg-[#3a362f] text-white font-medium max-w-[80%] shadow-sm">${text}</div>
+          <div class="w-7 h-7 rounded-full bg-[#e8cbb0] text-[#5e432a] flex items-center justify-center text-[10px] shrink-0 font-bold">ME</div>
         </div>
       `;
       input.value = '';
@@ -1004,8 +1260,8 @@
         const data = await res.json();
         history.innerHTML += `
           <div class="flex gap-2.5">
-            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px] shrink-0 font-black">AI</div>
-            <div class="p-3 rounded-xl bg-slate-800/60 text-slate-200 max-w-[80%]">${data.reply}</div>
+            <div class="w-7 h-7 rounded-full bg-[#3a362f] text-white flex items-center justify-center text-[10px] shrink-0 font-bold">AI</div>
+            <div class="p-3.5 rounded-2xl bg-white border border-[#e5e1d8] text-[#262422] max-w-[80%] shadow-sm">${data.reply}</div>
           </div>
         `;
         history.scrollTop = history.scrollHeight;
@@ -1021,6 +1277,12 @@
       if (!el) return;
       const ctx = el.getContext('2d');
       const labels = Array.from({length: 12}, (_, i) => `${i*2}:00`);
+      
+      if (energyChart) {
+        energyChart.destroy();
+      }
+
+      // Elegant Nude Sand & Pastel Slate Fill
       energyChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -1029,28 +1291,43 @@
             {
               label: 'Solar Yield (kW)',
               data: [0, 0, 0.2, 1.5, 3.8, 5.4, 6.2, 5.8, 4.85, 2.1, 0.4, 0],
-              borderColor: '#f59e0b',
-              backgroundColor: 'rgba(245, 158, 11, 0.1)',
-              tension: 0.4,
-              fill: true
+              borderColor: '#d4a373',
+              backgroundColor: 'rgba(212, 163, 115, 0.18)',
+              tension: 0.38,
+              fill: true,
+              borderWidth: 2.5
             },
             {
               label: 'Home Load (kW)',
               data: [1.2, 1.1, 1.4, 2.8, 2.4, 3.1, 2.9, 3.2, 3.20, 4.5, 3.8, 2.0],
-              borderColor: '#3b82f6',
-              backgroundColor: 'rgba(59, 130, 246, 0.05)',
-              tension: 0.4,
-              fill: true
+              borderColor: '#8da9c4',
+              backgroundColor: 'rgba(141, 169, 196, 0.15)',
+              tension: 0.38,
+              fill: true,
+              borderWidth: 2.5
             }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } },
+          plugins: { 
+            legend: { 
+              labels: { 
+                color: '#57534e', 
+                font: { size: 11, family: 'Plus Jakarta Sans', weight: 600 } 
+              } 
+            } 
+          },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+            x: { 
+              grid: { color: '#eae6de' }, 
+              ticks: { color: '#78716c', font: { family: 'Plus Jakarta Sans' } } 
+            },
+            y: { 
+              grid: { color: '#eae6de' }, 
+              ticks: { color: '#78716c', font: { family: 'Plus Jakarta Sans' } } 
+            }
           }
         }
       });
