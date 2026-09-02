@@ -10,6 +10,7 @@ router = APIRouter(prefix="/auth", tags=["Identity & Access Management"])
 class LoginRequest(BaseModel):
     email: str
     password: str
+    full_name: Optional[str] = None
 
 class GuestPassCreateRequest(BaseModel):
     home_id: str
@@ -30,7 +31,7 @@ async def get_current_user(authorization: Optional[str] = Header(None)):
 @router.post("/login")
 async def login(req: LoginRequest):
     try:
-        return await auth_service.authenticate(req.email, req.password)
+        return await auth_service.authenticate(req.email, req.password, full_name=req.full_name)
     except AuthenticationError as e:
         raise HTTPException(status_code=401, detail=str(e))
     except AuthorizationError as e:

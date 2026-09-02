@@ -76,7 +76,7 @@ class AuthService:
             USERS_DB[guest_user.email] = guest_user
             USERS_DB[guest_user.user_id] = guest_user
 
-    async def authenticate(self, email: str, password: str, ip: str = "127.0.0.1", user_agent: str = "Web/Browser") -> Dict[str, Any]:
+    async def authenticate(self, email: str, password: str, full_name: Optional[str] = None, ip: str = "127.0.0.1", user_agent: str = "Web/Browser") -> Dict[str, Any]:
         email_clean = email.strip()
         pwd_clean = password.strip()
         if not email_clean or not pwd_clean:
@@ -84,14 +84,22 @@ class AuthService:
             raise AuthenticationError("Please enter both email and password.")
 
         user = USERS_DB.get(email_clean.lower())
+        
+        # Determine preferred display name
+        if full_name and full_name.strip():
+            display_name = full_name.strip()
+        elif user:
+            display_name = user.full_name
+        else:
+            name_part = email_clean.split('@')[0].replace('.', ' ').replace('_', ' ').replace('-', ' ').title()
+            display_name = name_part if name_part else "Smart Home User"
+
         if not user:
             # Auto-create user so any entered email/password can log in
-            name_part = email_clean.split('@')[0].replace('.', ' ').replace('_', ' ').replace('-', ' ').title()
-            full_name = name_part if name_part else "Smart Home User"
             user = User(
                 user_id=f"usr-{secrets.token_hex(4)}",
                 email=email_clean,
-                full_name=full_name,
+                full_name=display_name,
                 phone_number="+1-555-0100",
                 role=UserRole.PLATFORM_OWNER,
                 hashed_password=hash_password(pwd_clean),
@@ -100,8 +108,11 @@ class AuthService:
             )
             USERS_DB[email_clean.lower()] = user
             USERS_DB[user.user_id] = user
-        elif not verify_password(pwd_clean, user.hashed_password):
-            user.hashed_password = hash_password(pwd_clean)
+        else:
+            if full_name and full_name.strip():
+                user.full_name = display_name
+            if not verify_password(pwd_clean, user.hashed_password):
+                user.hashed_password = hash_password(pwd_clean)
 
         if not user.is_active:
             raise AuthorizationError("Account is inactive or suspended.")

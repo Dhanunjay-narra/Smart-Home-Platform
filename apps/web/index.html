@@ -146,6 +146,22 @@
         </div>
 
         <div>
+          <label for="loginFullName" class="block text-xs font-bold text-[#57534e] mb-1.5 uppercase tracking-wider text-[11px]">Your Name / Display Name</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#a8a29e] text-xs">
+              <i class="fa-solid fa-user"></i>
+            </span>
+            <input 
+              type="text" 
+              id="loginFullName" 
+              name="fullname" 
+              placeholder="e.g. Dhanunjay Narra, Alexander, Sarah..." 
+              class="clean-input w-full pl-10 pr-4 py-3 text-xs placeholder-[#a8a29e]"
+            />
+          </div>
+        </div>
+
+        <div>
           <label for="loginEmail" class="block text-xs font-bold text-[#57534e] mb-1.5 uppercase tracking-wider text-[11px]">Email / Member ID</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#a8a29e] text-xs">
@@ -202,13 +218,13 @@
         <div class="pt-5 mt-5 border-t border-[#eae6de]">
           <p class="text-[11px] text-[#78716c] mb-2.5 font-medium text-center">Quick Profile Presets:</p>
           <div class="grid grid-cols-2 gap-2.5">
-            <button type="button" onclick="fillDemoCredentials('dhanu@123', 'bhanu')" class="py-2.5 px-3.5 rounded-xl bg-[#f5f3ee] border border-[#e5e1d8] hover:bg-[#eae6de] text-[11px] text-[#3a362f] font-semibold transition text-left flex items-center gap-2 cursor-pointer">
+            <button type="button" onclick="fillDemoCredentials('Dhanunjay Narra', 'dhanu@123', 'bhanu')" class="py-2.5 px-3.5 rounded-xl bg-[#f5f3ee] border border-[#e5e1d8] hover:bg-[#eae6de] text-[11px] text-[#3a362f] font-semibold transition text-left flex items-center gap-2 cursor-pointer">
               <span class="w-5 h-5 rounded-full bg-[#e8cbb0] text-[#785935] flex items-center justify-center text-[10px] font-bold">D</span>
-              <span class="truncate font-bold">dhanu@123</span>
+              <span class="truncate font-bold">Dhanunjay Narra</span>
             </button>
-            <button type="button" onclick="fillDemoCredentials('admin@smarthome.local', 'HomeAdmin2026!')" class="py-2.5 px-3.5 rounded-xl bg-[#f5f3ee] border border-[#e5e1d8] hover:bg-[#eae6de] text-[11px] text-[#3a362f] font-semibold transition text-left flex items-center gap-2 cursor-pointer">
+            <button type="button" onclick="fillDemoCredentials('Admin Master', 'admin@smarthome.local', 'HomeAdmin2026!')" class="py-2.5 px-3.5 rounded-xl bg-[#f5f3ee] border border-[#e5e1d8] hover:bg-[#eae6de] text-[11px] text-[#3a362f] font-semibold transition text-left flex items-center gap-2 cursor-pointer">
               <span class="w-5 h-5 rounded-full bg-[#b7cebf] text-[#335c44] flex items-center justify-center text-[10px] font-bold">A</span>
-              <span class="truncate font-bold">Admin Demo</span>
+              <span class="truncate font-bold">Admin Master</span>
             </button>
           </div>
         </div>
@@ -260,7 +276,7 @@
           <div class="w-6 h-6 rounded-full bg-[#e8cbb0] text-[#5e432a] flex items-center justify-center text-[10px] font-bold" id="userAvatar">
             DN
           </div>
-          <span class="font-bold text-[#3a362f]" id="userNameDisplay">Dhanunjay Narra (PLATFORM OWNER)</span>
+          <span class="font-bold text-[#3a362f]" id="userNameDisplay">Dhanunjay Narra (Platform Owner)</span>
         </div>
         <button onclick="logout()" class="px-3.5 py-1.5 rounded-2xl bg-[#fdf2f0] hover:bg-[#fae4e1] border border-[#f5c2bb] text-[#a84338] hover:text-[#8a3329] font-bold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-sm" title="Sign out of platform">
           <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i> Logout
@@ -330,7 +346,7 @@
                 <span class="px-2.5 py-1 rounded-full bg-[#f4ece3] text-[#735233] text-[11px] font-bold border border-[#ebdccf]">
                   ✨ Villa Master Living
                 </span>
-                <h2 class="text-xl sm:text-2xl font-bold text-[#262422] mt-2">Welcome Home, <span id="welcomeUserName">Dhanunjay</span></h2>
+                <h2 class="text-xl sm:text-2xl font-bold text-[#262422] mt-2">Welcome Home, <span id="welcomeUserName">Dhanunjay Narra</span></h2>
                 <p class="text-xs text-[#78716c] mt-1 font-medium">100% clean solar self-powered. All perimeter safety zones armed.</p>
               </div>
               <div class="flex gap-2.5 shrink-0">
@@ -788,7 +804,9 @@
       }
     }
 
-    function fillDemoCredentials(email, pwd) {
+    function fillDemoCredentials(name, email, pwd) {
+      const nameInput = document.getElementById('loginFullName');
+      if (nameInput) nameInput.value = name;
       document.getElementById('loginEmail').value = email;
       document.getElementById('loginPassword').value = pwd;
       const errorAlert = document.getElementById('loginErrorAlert');
@@ -798,12 +816,14 @@
     // Login Handler
     async function handleLoginSubmit(event) {
       event.preventDefault();
+      const fullNameInput = document.getElementById('loginFullName');
       const emailInput = document.getElementById('loginEmail');
       const passwordInput = document.getElementById('loginPassword');
       const submitBtn = document.getElementById('loginSubmitBtn');
       const errorAlert = document.getElementById('loginErrorAlert');
       const errorMessage = document.getElementById('loginErrorMessage');
 
+      const enteredName = fullNameInput ? fullNameInput.value.trim() : '';
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
 
@@ -821,7 +841,7 @@
         const res = await fetch(API_BASE + '/api/v1/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email, password: password })
+          body: JSON.stringify({ email: email, password: password, full_name: enteredName })
         });
 
         const data = await res.json();
@@ -829,6 +849,9 @@
         if (res.ok && data.access_token) {
           currentAuthToken = data.access_token;
           currentUser = data.user;
+
+          // Determine the final clean display name from user input or backend user object
+          const cleanName = (enteredName || (currentUser && currentUser.full_name) || email.split('@')[0]).trim();
 
           // Switch view: Hide login page, Show dashboard
           document.getElementById('loginView').classList.add('hidden');
@@ -840,17 +863,17 @@
           const avatar = document.getElementById('userAvatar');
           
           if (nameDisplay) {
-            nameDisplay.textContent = `${currentUser.full_name} (${currentUser.role ? currentUser.role.replace(/_/g, ' ') : 'PLATFORM OWNER'})`;
+            nameDisplay.textContent = `${cleanName} (Platform Owner)`;
           }
           if (welcomeName) {
-            welcomeName.textContent = currentUser.full_name.split(' ')[0] || 'Resident';
+            welcomeName.textContent = cleanName;
           }
           if (avatar) {
-            const initials = currentUser.full_name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-            avatar.textContent = initials || 'DN';
+            const initials = cleanName.split(' ').map(n => n[0]).filter(Boolean).join('').substring(0, 2).toUpperCase();
+            avatar.textContent = initials || 'SH';
           }
 
-          showToast('Welcome Back', `Signed in as ${currentUser.full_name}`, 'fa-circle-check');
+          showToast('Welcome Back', `Signed in as ${cleanName}`, 'fa-circle-check');
 
           initEnergyChart();
           loadDevices();
