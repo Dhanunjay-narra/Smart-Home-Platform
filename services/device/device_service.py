@@ -86,6 +86,21 @@ class DeviceService:
             )
             DEVICES_DB[garage.device_id] = garage
 
+            valve = Device(
+                device_id="dev-valve-main",
+                name="Main Water Solenoid Valve",
+                category=DeviceCategory.ACCESS,
+                protocol=ProtocolType.ZIGBEE,
+                room_id="rm-utility",
+                home_id="home-master-01",
+                capabilities=[
+                    Capability(type=CapabilityType.POWER, name="Valve Position", current_value=True)
+                ],
+                state={"valve_state": True}
+            )
+            DEVICES_DB[valve.device_id] = valve
+            DEVICES_DB["dev-lock-front"] = lock
+
     def list_devices(self, home_id: Optional[str] = None, room_id: Optional[str] = None) -> List[Device]:
         devices = list(DEVICES_DB.values())
         if home_id:

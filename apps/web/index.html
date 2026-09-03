@@ -468,6 +468,33 @@
             </div>
           </div>
 
+          <!-- Interactive 2D Architectural Canvas Floorplan -->
+          <div class="architect-card p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+              <div>
+                <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                  <i class="fa-solid fa-map-location-dot text-[#9c754d]"></i> Interactive 2D Home Floorplan
+                </h3>
+                <p class="text-xs text-[#78716c]">Click any room or device pin to inspect or actuate</p>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-mono">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#e6f0e9] text-[#3d6e4f] font-bold border border-[#cbe0d1]">
+                  <span class="w-2 h-2 rounded-full bg-[#3d6e4f] animate-pulse"></span> 6 Zones Active
+                </span>
+              </div>
+            </div>
+            <div class="relative bg-[#faf9f6] rounded-2xl border border-[#e8e5df] p-2 flex items-center justify-center overflow-hidden">
+              <canvas id="floorplanCanvas" width="800" height="360" class="w-full max-w-4xl h-auto cursor-pointer rounded-xl"></canvas>
+            </div>
+            <div class="mt-3 flex flex-wrap items-center justify-center gap-4 text-[11px] text-[#78716c]">
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#d4a373]"></span> Living Room</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#84a98c]"></span> Master Suite</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#8da9c4]"></span> Kitchen</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#a3a1c7]"></span> Office Lab</span>
+              <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#b08968]"></span> Smart Garage</span>
+            </div>
+          </div>
+
           <!-- Telemetry Graph with Pastel Color Styling & Live Activity -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="architect-card p-6 lg:col-span-2">
@@ -556,6 +583,24 @@
                 <i class="fa-solid fa-charging-station text-2xl text-[#55527a] mb-2"></i>
                 <div class="text-xs text-[#78716c] font-medium">EV Wallbox Fast Charger</div>
                 <div class="text-xl font-bold text-[#262422] mt-1">7.40 kW</div>
+              </div>
+            </div>
+
+            <!-- Real-Time Energy Flow Visualizer Gauge -->
+            <div class="mt-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                <div>
+                  <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-split-up-and-left text-[#9c754d]"></i> Real-Time Dynamic Energy Flow Gauge
+                  </h3>
+                  <p class="text-xs text-[#78716c]">Live bidirectional power routing & storage distribution</p>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-[#e6f0e9] text-[#3d6e4f] text-[11px] font-bold border border-[#cbe0d1] self-start sm:self-auto">
+                  GRID ZERO (100% SELF-POWERED)
+                </span>
+              </div>
+              <div class="relative bg-[#faf9f6] rounded-2xl border border-[#e8e5df] p-4 flex items-center justify-center overflow-hidden">
+                <canvas id="energyFlowCanvas" width="800" height="260" class="w-full max-w-4xl h-auto rounded-xl"></canvas>
               </div>
             </div>
           </div>
@@ -702,9 +747,22 @@
         <!-- =================================================================== -->
         <section id="tab-audit" class="hidden space-y-6">
           <div class="architect-card p-6">
-            <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2 mb-4">
-              <i class="fa-solid fa-clock-rotate-left text-[#8e8677]"></i> Access & Audit Activity Ledger
-            </h2>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="text-lg font-bold text-[#262422] flex items-center gap-2">
+                  <i class="fa-solid fa-clock-rotate-left text-[#8e8677]"></i> Access & Audit Activity Ledger
+                </h2>
+                <p class="text-xs text-[#78716c]">Cryptographically tamper-evident immutable system events</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="exportAuditCSV()" class="px-3.5 py-1.5 bg-white hover:bg-[#faf9f6] text-[#3a362f] font-bold text-xs rounded-2xl transition flex items-center gap-1.5 border border-[#dcd7cd] cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-file-csv text-sm text-[#3d6e4f]"></i> Export CSV
+                </button>
+                <button onclick="exportPDFReport()" class="px-3.5 py-1.5 bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs rounded-2xl transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                  <i class="fa-solid fa-file-pdf text-sm text-[#e07a5f]"></i> Print Report
+                </button>
+              </div>
+            </div>
             <div class="overflow-x-auto">
               <table class="w-full text-left text-xs">
                 <thead class="bg-[#faf9f6] text-[#78716c] font-bold uppercase tracking-wider border-b border-[#e8e5df]">
@@ -822,7 +880,11 @@
         activeMBtn.className = "m-tab-btn flex flex-col items-center justify-center py-1 px-1.5 rounded-xl text-[#262422] font-bold bg-[#f5f3ee] transition cursor-pointer";
       }
 
-      if (tabId === 'automations') {
+      if (tabId === 'overview') {
+        setTimeout(initFloorplanCanvas, 50);
+      } else if (tabId === 'energy') {
+        setTimeout(initEnergyFlowCanvas, 50);
+      } else if (tabId === 'automations') {
         loadScenes();
         loadRules();
       } else if (tabId === 'devices') {
@@ -1411,12 +1473,243 @@
       });
     }
 
+    // =========================================================================
+    // INTERACTIVE 2D ARCHITECTURAL CANVAS FLOORPLAN
+    // =========================================================================
+    let floorplanDevices = [
+      { id: 'dev-light-living', name: 'Living Chandelier', x: 190, y: 130, state: true, type: 'light', room: 'Living Room' },
+      { id: 'dev-thermostat-living', name: 'Living AC (23°C)', x: 100, y: 90, state: true, type: 'climate', room: 'Living Room' },
+      { id: 'dev-light-master', name: 'Master Bed Ambient', x: 470, y: 130, state: false, type: 'light', room: 'Master Suite' },
+      { id: 'dev-plug-kitchen', name: 'Coffee Station', x: 150, y: 280, state: true, type: 'plug', room: 'Kitchen' },
+      { id: 'dev-lock-front', name: 'Front Entrance Lock', x: 50, y: 130, state: true, type: 'lock', room: 'Entry' },
+      { id: 'ev-wallbox', name: 'Tesla Wallbox (32A)', x: 600, y: 280, state: true, type: 'ev', room: 'Garage' }
+    ];
+
+    function initFloorplanCanvas() {
+      const canvas = document.getElementById('floorplanCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      function render() {
+        ctx.clearRect(0, 0, W, H);
+
+        // 1. Background Grid
+        ctx.fillStyle = '#faf9f6';
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = '#f0ece1';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < W; x += 20) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+        }
+        for (let y = 0; y < H; y += 20) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+        }
+
+        // 2. Room Boundaries (Architectural Pastel Fill)
+        const rooms = [
+          { name: 'LIVING ROOM & CINEMA', x: 40, y: 40, w: 300, h: 160, bg: 'rgba(212, 163, 115, 0.08)', stroke: '#d4a373' },
+          { name: 'MASTER BEDROOM SUITE', x: 360, y: 40, w: 230, h: 160, bg: 'rgba(132, 169, 140, 0.08)', stroke: '#84a98c' },
+          { name: 'GOURMET KITCHEN', x: 40, y: 220, w: 220, h: 110, bg: 'rgba(141, 169, 196, 0.08)', stroke: '#8da9c4' },
+          { name: 'OFFICE / LAB', x: 280, y: 220, w: 180, h: 110, bg: 'rgba(163, 161, 199, 0.08)', stroke: '#a3a1c7' },
+          { name: 'SMART GARAGE & EV', x: 480, y: 220, w: 280, h: 110, bg: 'rgba(176, 137, 104, 0.08)', stroke: '#b08968' }
+        ];
+
+        rooms.forEach(r => {
+          ctx.fillStyle = r.bg;
+          ctx.fillRect(r.x, r.y, r.w, r.h);
+          ctx.strokeStyle = r.stroke;
+          ctx.lineWidth = 2;
+          ctx.strokeRect(r.x, r.y, r.w, r.h);
+
+          // Room Title
+          ctx.fillStyle = '#78716c';
+          ctx.font = 'bold 10px Plus Jakarta Sans, sans-serif';
+          ctx.fillText(r.name, r.x + 12, r.y + 22);
+        });
+
+        // 3. Render Device Pins
+        floorplanDevices.forEach(d => {
+          // Glow / Dot
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, 8, 0, Math.PI * 2);
+          ctx.fillStyle = d.state ? '#3d6e4f' : '#a8a29e';
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Ripple effect for active devices
+          if (d.state) {
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, 14, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(61, 110, 79, 0.35)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+          }
+
+          // Label
+          ctx.fillStyle = '#262422';
+          ctx.font = 'bold 10px Plus Jakarta Sans, sans-serif';
+          ctx.fillText(d.name, d.x + 14, d.y + 4);
+        });
+      }
+
+      render();
+
+      // Click to toggle device on Canvas
+      canvas.onclick = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const clickX = (e.clientX - rect.left) * scaleX;
+        const clickY = (e.clientY - rect.top) * scaleY;
+
+        floorplanDevices.forEach(d => {
+          const dist = Math.hypot(clickX - d.x, clickY - d.y);
+          if (dist <= 25) {
+            d.state = !d.state;
+            render();
+            showToast('Floorplan Actuation', `${d.name} turned ${d.state ? 'ON' : 'OFF'}`, d.state ? 'fa-toggle-on' : 'fa-toggle-off');
+            quickCommand(d.id, 'power', d.state);
+          }
+        });
+      };
+    }
+
+    // =========================================================================
+    // REAL-TIME ANIMATED ENERGY FLOW GAUGE
+    // =========================================================================
+    let flowAnimFrame = null;
+    let particleOffset = 0;
+
+    function initEnergyFlowCanvas() {
+      const canvas = document.getElementById('energyFlowCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      const nodes = {
+        solar: { x: 120, y: 60, title: 'Solar PV', val: '4.85 kW', color: '#d4a373', icon: '☀️' },
+        inverter: { x: 400, y: 60, title: 'Hybrid Inverter', val: '96.6% Eff', color: '#8da9c4', icon: '⚡' },
+        home: { x: 680, y: 60, title: 'Home Load', val: '3.20 kW', color: '#55527a', icon: '🏠' },
+        battery: { x: 260, y: 200, title: 'BESS Battery', val: '88.5% (+1.2kW)', color: '#3d6e4f', icon: '🔋' },
+        ev: { x: 540, y: 200, title: 'EV Wallbox', val: '7.40 kW', color: '#b08968', icon: '🚗' }
+      };
+
+      function drawNode(n) {
+        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = n.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(n.x - 65, n.y - 30, 130, 60, 16);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = '16px sans-serif';
+        ctx.fillText(n.icon, n.x - 52, n.y + 5);
+
+        ctx.fillStyle = '#78716c';
+        ctx.font = 'bold 9px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(n.title.toUpperCase(), n.x - 28, n.y - 8);
+
+        ctx.fillStyle = '#262422';
+        ctx.font = 'bold 12px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(n.val, n.x - 28, n.y + 12);
+      }
+
+      function drawFlowPath(from, to, color) {
+        ctx.strokeStyle = '#e2ded5';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.lineTo(to.x, to.y);
+        ctx.stroke();
+
+        // Moving particle dots
+        const dx = to.x - from.x;
+        const dy = to.y - from.y;
+        const dist = Math.hypot(dx, dy);
+        
+        ctx.fillStyle = color;
+        for (let p = 0; p < 3; p++) {
+          const t = ((particleOffset + p * (dist / 3)) % dist) / dist;
+          const px = from.x + dx * t;
+          const py = from.y + dy * t;
+          ctx.beginPath();
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#faf9f6';
+        ctx.fillRect(0, 0, W, H);
+
+        particleOffset = (particleOffset + 0.8) % 300;
+
+        // Draw Flow Connectors
+        drawFlowPath(nodes.solar, nodes.inverter, '#d4a373');
+        drawFlowPath(nodes.inverter, nodes.home, '#416282');
+        drawFlowPath(nodes.inverter, nodes.battery, '#3d6e4f');
+        drawFlowPath(nodes.inverter, nodes.ev, '#b08968');
+
+        // Draw Nodes on Top
+        Object.values(nodes).forEach(drawNode);
+
+        flowAnimFrame = requestAnimationFrame(animate);
+      }
+
+      if (flowAnimFrame) cancelAnimationFrame(flowAnimFrame);
+      animate();
+    }
+
+    // =========================================================================
+    // CSV & PDF AUDIT EXPORT UTILITIES
+    // =========================================================================
+    function exportAuditCSV() {
+      const rows = [
+        ["Timestamp", "Actor", "Action", "Target Resource", "Result", "IP Address"]
+      ];
+      document.querySelectorAll('#auditTableBody tr').forEach(tr => {
+        const cols = Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim());
+        if (cols.length >= 5) {
+          rows.push([cols[0], cols[1], cols[2], cols[3], cols[4], "127.0.0.1"]);
+        }
+      });
+      if (rows.length <= 1) {
+        rows.push([new Date().toISOString(), "Dhanunjay Narra", "SYSTEM_SNAPSHOT", "all_nodes", "SUCCESS", "127.0.0.1"]);
+      }
+      
+      const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.map(i => `"${i}"`).join(",")).join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `SmartHome_Audit_Report_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Export Complete', 'Audit ledger CSV downloaded successfully.', 'fa-file-csv');
+    }
+
+    function exportPDFReport() {
+      window.print();
+    }
+
     // Initialize on page load: show login screen ready for credentials
     window.addEventListener('DOMContentLoaded', () => {
       const emailInput = document.getElementById('loginEmail');
       if (emailInput) {
         emailInput.focus();
       }
+      setTimeout(() => {
+        initFloorplanCanvas();
+        initEnergyFlowCanvas();
+      }, 500);
     });
   </script>
 </body>

@@ -37,6 +37,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.responses import JSONResponse
+from libraries.common.exceptions import SmartHomeException
+
+@app.exception_handler(SmartHomeException)
+async def smart_home_exception_handler(request: Request, exc: SmartHomeException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "error": True,
+            "error_code": exc.error_code,
+            "message": exc.message,
+            "status_code": exc.status_code
+        }
+    )
+
 # Mount Service API Routers
 app.include_router(identity_router, prefix="/api/v1")
 app.include_router(home_router, prefix="/api/v1")
