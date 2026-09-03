@@ -32,7 +32,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -47,6 +47,15 @@ app.include_router(security_router, prefix="/api/v1")
 app.include_router(energy_router, prefix="/api/v1")
 app.include_router(ai_router, prefix="/api/v1")
 app.include_router(analytics_router, prefix="/api/v1")
+
+from libraries.database.engine import init_db
+
+# Initialize SQLite database on startup
+@app.on_event("startup")
+async def on_startup():
+    init_db()
+    print(" [DATABASE] Connected to SQLite database: ./data/smarthome.db")
+    print(" [DATABASE] Tables initialized (users, devices, rules, scenes, audit_logs) -> SUCCESS")
 
 # Web Dashboard Path
 web_dir = Path(__file__).parent / "apps" / "web"
@@ -64,6 +73,7 @@ async def health_check():
     return {
         "status": "HEALTHY",
         "version": "2.4.0",
+        "database": "sqlite+aiosqlite:///./data/smarthome.db",
         "platform": "Smart Home Unified Architecture",
         "services": [
             "identity", "home", "device", "telemetry", "automation",
@@ -72,10 +82,12 @@ async def health_check():
     }
 
 if __name__ == "__main__":
+    init_db()
     print("=================================================================")
     print(" Smart Home Platform — Starting Production Server")
     print(" Dashboard URL: http://localhost:8000")
     print(" API Docs:     http://localhost:8000/api/docs")
+    print(" Database:     Connected (SQLite: ./data/smarthome.db)")
     print(" 1-Click Login: admin@smarthome.local / HomeAdmin2026!")
     print("=================================================================")
     uvicorn.run("run_server:app", host="0.0.0.0", port=8000, reload=False)

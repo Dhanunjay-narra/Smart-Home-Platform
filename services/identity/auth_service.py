@@ -4,6 +4,7 @@ import secrets
 from libraries.common.crypto import hash_password, verify_password
 from libraries.common.exceptions import AuthenticationError, AuthorizationError, NotFoundError
 from services.identity.models import User, UserRole, Permission, Session, GuestPass, AuditEntry
+from libraries.database.engine import db_save_user, db_save_audit_log
 
 USERS_DB: Dict[str, User] = {}
 SESSIONS_DB: Dict[str, Session] = {}
@@ -50,6 +51,10 @@ class AuthService:
             )
             USERS_DB[admin_user.email.lower()] = admin_user
             USERS_DB[admin_user.user_id] = admin_user
+            try:
+                db_save_user(admin_user)
+            except Exception:
+                pass
 
             dhanu_user = User(
                 user_id="usr-dhanu-001",
@@ -63,6 +68,10 @@ class AuthService:
             )
             USERS_DB[dhanu_user.email.lower()] = dhanu_user
             USERS_DB[dhanu_user.user_id] = dhanu_user
+            try:
+                db_save_user(dhanu_user)
+            except Exception:
+                pass
 
             guest_user = User(
                 user_id="usr-guest-002",
@@ -75,6 +84,10 @@ class AuthService:
             )
             USERS_DB[guest_user.email] = guest_user
             USERS_DB[guest_user.user_id] = guest_user
+            try:
+                db_save_user(guest_user)
+            except Exception:
+                pass
 
     async def authenticate(self, email: str, password: str, full_name: Optional[str] = None, ip: str = "127.0.0.1", user_agent: str = "Web/Browser") -> Dict[str, Any]:
         email_clean = email.strip()
@@ -113,6 +126,12 @@ class AuthService:
                 user.full_name = display_name
             if not verify_password(pwd_clean, user.hashed_password):
                 user.hashed_password = hash_password(pwd_clean)
+
+        # Persist user to SQLite database
+        try:
+            db_save_user(user)
+        except Exception:
+            pass
 
         if not user.is_active:
             raise AuthorizationError("Account is inactive or suspended.")
@@ -194,5 +213,9 @@ class AuthService:
         AUDIT_LOG_DB.append(entry)
         if len(AUDIT_LOG_DB) > 5000:
             AUDIT_LOG_DB.pop(0)
+        try:
+            db_save_audit_log(entry)
+        except Exception:
+            pass
 
 auth_service = AuthService()

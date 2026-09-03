@@ -12,3 +12,5 @@ htmlcov/
 *.o
 *.elf
 *.bin
+*.db
+data/*.db
