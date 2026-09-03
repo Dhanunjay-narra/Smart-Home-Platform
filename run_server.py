@@ -64,13 +64,41 @@ app.include_router(ai_router, prefix="/api/v1")
 app.include_router(analytics_router, prefix="/api/v1")
 
 from libraries.database.engine import init_db
+from services.telemetry.stream_processor import telemetry_processor
+from services.energy.energy_service import energy_service
+import asyncio
 
-# Initialize SQLite database on startup
+async def background_telemetry_loop():
+    """Periodic telemetry emitter that broadcasts real-time energy fluctuations to WebSocket clients."""
+    while True:
+        try:
+            await asyncio.sleep(2.5)
+            flow = energy_service.get_realtime_energy_flow()
+            tariff = energy_service.get_tariff_breakdown()
+            await telemetry_processor.broadcast_ws({
+                "type": "ENERGY_FLOW_UPDATE",
+                "flow": {
+                    "solar_kw": flow.solar_generation_kw,
+                    "home_kw": flow.home_consumption_kw,
+                    "battery_soc": flow.battery_soc_percent,
+                    "battery_charge_kw": flow.battery_charge_kw,
+                    "ev_kw": flow.ev_charging_kw,
+                    "grid_kw": flow.grid_import_kw
+                },
+                "tariff": tariff
+            })
+        except asyncio.CancelledError:
+            break
+        except Exception:
+            pass
+
+# Initialize SQLite database & background tasks on startup
 @app.on_event("startup")
 async def on_startup():
     init_db()
+    asyncio.create_task(background_telemetry_loop())
     print(" [DATABASE] Connected to SQLite database: ./data/smarthome.db")
-    print(" [DATABASE] Tables initialized (users, devices, rules, scenes, audit_logs) -> SUCCESS")
+    print(" [TELEMETRY] Live WebSocket broadcaster active (2.5s interval)")
 
 # Web Dashboard Path
 web_dir = Path(__file__).parent / "apps" / "web"

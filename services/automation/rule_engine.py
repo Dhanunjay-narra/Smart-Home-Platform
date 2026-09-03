@@ -1,3 +1,4 @@
+import time
 from typing import Dict, Any, List, Optional
 from services.automation.models import AutomationRule, TriggerType, ActionType, Scene, RuleAction
 from libraries.common.events import global_event_bus, DomainEvent
@@ -9,6 +10,8 @@ SCENES_DB: Dict[str, Scene] = {}
 
 class AutomationEngine:
     def __init__(self):
+        self._last_execution: Dict[str, float] = {}
+        self._cooldown_seconds = 0.5
         self._seed_defaults()
 
     def _seed_defaults(self):
@@ -126,6 +129,11 @@ class AutomationEngine:
             RULES_DB[r4.rule_id] = r4
 
     async def activate_scene(self, scene_id: str) -> bool:
+        now = time.time()
+        if scene_id in self._last_execution and (now - self._last_execution[scene_id]) < self._cooldown_seconds:
+            return True
+        self._last_execution[scene_id] = now
+
         scene = SCENES_DB.get(scene_id)
         if not scene:
             return False
@@ -147,6 +155,11 @@ class AutomationEngine:
         return rule.is_enabled
 
     async def execute_rule(self, rule_id: str) -> bool:
+        now = time.time()
+        if rule_id in self._last_execution and (now - self._last_execution[rule_id]) < self._cooldown_seconds:
+            return True
+        self._last_execution[rule_id] = now
+
         rule = RULES_DB.get(rule_id)
         if not rule:
             return False

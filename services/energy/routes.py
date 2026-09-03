@@ -20,6 +20,11 @@ class TOUOptimizationRequest(BaseModel):
 async def get_energy_flow(user = Depends(get_current_user)):
     return energy_service.get_realtime_energy_flow()
 
+@router.get("/tariff")
+async def get_energy_tariff(user = Depends(get_current_user)):
+    """Returns real-time Time-of-Use tariff rates and daily dollar savings."""
+    return energy_service.get_tariff_breakdown()
+
 @router.get("/battery/ekf")
 async def get_battery_ekf_state(current_amps: float = 25.0, measured_voltage: float = 51.6, user = Depends(get_current_user)):
     """Computes battery State-of-Charge (SoC) and State-of-Health (SoH) using Kalman filter."""
