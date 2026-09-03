@@ -595,12 +595,49 @@
                   </h3>
                   <p class="text-xs text-[#78716c]">Live bidirectional power routing & storage distribution</p>
                 </div>
-                <span class="px-2.5 py-1 rounded-full bg-[#e6f0e9] text-[#3d6e4f] text-[11px] font-bold border border-[#cbe0d1] self-start sm:self-auto">
+                <span id="gridSelfPoweredBadge" class="px-2.5 py-1 rounded-full bg-[#e6f0e9] text-[#3d6e4f] text-[11px] font-bold border border-[#cbe0d1] self-start sm:self-auto">
                   GRID ZERO (100% SELF-POWERED)
                 </span>
               </div>
               <div class="relative bg-[#faf9f6] rounded-2xl border border-[#e8e5df] p-4 flex items-center justify-center overflow-hidden">
                 <canvas id="energyFlowCanvas" width="800" height="260" class="w-full max-w-4xl h-auto rounded-xl"></canvas>
+              </div>
+            </div>
+
+            <!-- Time-of-Use (ToU) Tariff & Real-Time Financial Savings Widget -->
+            <div class="mt-6 p-5 rounded-2xl bg-gradient-to-r from-[#faf9f6] to-[#f5f3ee] border border-[#e8e5df]">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                <div>
+                  <h3 class="font-bold text-sm text-[#262422] flex items-center gap-2">
+                    <i class="fa-solid fa-coins text-[#e9bc7b]"></i> Time-of-Use Tariff & Solar Financial Savings
+                  </h3>
+                  <p class="text-xs text-[#78716c]">Smart battery arbitrage and clean energy cost optimization</p>
+                </div>
+                <span id="touTariffBadge" class="px-2.5 py-1 rounded-full bg-[#faedd9] text-[#9c6a3b] text-[11px] font-bold border border-[#edd5be]">
+                  PEAK TARIFF ($0.28 / kWh)
+                </span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div class="p-3.5 rounded-xl bg-white border border-[#e8e5df]">
+                  <div class="text-[11px] text-[#78716c] font-medium">Daily Cost Saved</div>
+                  <div id="valDailySaved" class="text-lg font-black text-[#3d6e4f] mt-0.5">$4.85</div>
+                  <div class="text-[9px] text-[#78716c]">vs utility grid peak rate</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-[#e8e5df]">
+                  <div class="text-[11px] text-[#78716c] font-medium">Self-Consumption</div>
+                  <div id="valSelfConsumption" class="text-lg font-black text-[#416282] mt-0.5">94.5%</div>
+                  <div class="text-[9px] text-[#78716c]">rooftop solar used locally</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-[#e8e5df]">
+                  <div class="text-[11px] text-[#78716c] font-medium">Grid Export Revenue</div>
+                  <div id="valGridExport" class="text-lg font-black text-[#9c6a3b] mt-0.5">+$1.20</div>
+                  <div class="text-[9px] text-[#78716c]">feed-in net metering</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-white border border-[#e8e5df]">
+                  <div class="text-[11px] text-[#78716c] font-medium">CO2 Offset Today</div>
+                  <div id="valCarbonOffset" class="text-lg font-black text-[#55527a] mt-0.5">11.9 kg</div>
+                  <div class="text-[9px] text-[#78716c]">greenhouse gas avoided</div>
+                </div>
               </div>
             </div>
           </div>
@@ -733,9 +770,25 @@
               </div>
             </div>
 
-            <div class="mt-4 flex gap-2.5">
+            <!-- Quick Suggestion Prompt Chips -->
+            <div class="flex flex-wrap gap-2 mt-3 mb-1">
+              <button onclick="sendQuickPrompt('Turn on living lights and set AC to 22C')" class="px-3 py-1 rounded-xl bg-white hover:bg-[#faf9f6] border border-[#dcd7cd] text-[11px] text-[#57534e] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-lightbulb text-[#e9bc7b]"></i> Lights & AC 22°C
+              </button>
+              <button onclick="sendQuickPrompt('What is current solar generation and cost saved?')" class="px-3 py-1 rounded-xl bg-white hover:bg-[#faf9f6] border border-[#dcd7cd] text-[11px] text-[#57534e] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-solar-panel text-[#9c6a3b]"></i> Solar & Savings
+              </button>
+              <button onclick="sendQuickPrompt('Activate Movie Night scene')" class="px-3 py-1 rounded-xl bg-white hover:bg-[#faf9f6] border border-[#dcd7cd] text-[11px] text-[#57534e] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-film text-[#784e27]"></i> Movie Scene
+              </button>
+              <button onclick="sendQuickPrompt('Arm perimeter security in away mode')" class="px-3 py-1 rounded-xl bg-white hover:bg-[#faf9f6] border border-[#dcd7cd] text-[11px] text-[#57534e] hover:text-[#262422] transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-shield text-[#d95d50]"></i> Arm Away
+              </button>
+            </div>
+
+            <div class="mt-3 flex gap-2.5">
               <input id="aiInput" type="text" placeholder="Type a smart home command (e.g. Set living room AC to 22C)..." class="clean-input flex-1 px-4 py-3 text-xs text-[#262422]" onkeydown="if(event.key==='Enter') sendAiCommand()">
-              <button onclick="sendAiCommand()" class="px-6 py-3 bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs rounded-2xl transition flex items-center gap-2 cursor-pointer shadow-sm">
+              <button id="btnSendAi" onclick="sendAiCommand()" class="px-6 py-3 bg-[#3a362f] hover:bg-[#22201c] text-white font-bold text-xs rounded-2xl transition flex items-center gap-2 cursor-pointer shadow-sm">
                 <i class="fa-solid fa-paper-plane"></i> Send
               </button>
             </div>
@@ -1376,11 +1429,22 @@
       }
     }
 
+    function sendQuickPrompt(promptText) {
+      const input = document.getElementById('aiInput');
+      if (input) {
+        input.value = promptText;
+        sendAiCommand();
+      }
+    }
+
     async function sendAiCommand() {
       const input = document.getElementById('aiInput');
       const text = input.value.trim();
       if (!text) return;
       
+      const btn = document.getElementById('btnSendAi');
+      if (btn) btn.disabled = true;
+
       const history = document.getElementById('chatHistory');
       history.innerHTML += `
         <div class="flex gap-2.5 justify-end">
@@ -1401,7 +1465,7 @@
         history.innerHTML += `
           <div class="flex gap-2.5">
             <div class="w-7 h-7 rounded-full bg-[#3a362f] text-white flex items-center justify-center text-[10px] shrink-0 font-bold">AI</div>
-            <div class="p-3.5 rounded-2xl bg-white border border-[#e5e1d8] text-[#262422] max-w-[80%] shadow-sm">${data.reply}</div>
+            <div class="p-3.5 rounded-2xl bg-white border border-[#e5e1d8] text-[#262422] max-w-[80%] shadow-sm leading-relaxed">${data.reply}</div>
           </div>
         `;
         history.scrollTop = history.scrollHeight;
@@ -1409,6 +1473,65 @@
         loadAuditLogs();
       } catch (err) {
         console.error("AI chat error:", err);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    // =========================================================================
+    // REAL-TIME WEBSOCKET SYNCHRONIZATION ENGINE
+    // =========================================================================
+    let wsClient = null;
+
+    function initWebSocket() {
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsHost = window.location.host || 'localhost:8000';
+      const wsUrl = `${wsProtocol}//${wsHost}/api/v1/telemetry/ws`;
+
+      try {
+        wsClient = new WebSocket(wsUrl);
+
+        wsClient.onopen = () => {
+          console.log(" [WS] Connected to Smart Home real-time telemetry stream.");
+        };
+
+        wsClient.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            if (data.type === 'DEVICE_STATE_CHANGED') {
+              // Update floorplan device state in real time
+              const devPin = floorplanDevices.find(d => d.id === data.device_id);
+              if (devPin && data.payload && data.payload.new_state) {
+                if ('power' in data.payload.new_state) devPin.state = Boolean(data.payload.new_state.power);
+                if ('locked' in data.payload.new_state) devPin.state = Boolean(data.payload.new_state.locked);
+              }
+              loadDevices();
+            } else if (data.type === 'ENERGY_FLOW_UPDATE' && data.flow) {
+              // Update live node values in energy visualizer
+              if (nodes && nodes.solar) nodes.solar.val = `${data.flow.solar_kw.toFixed(2)} kW`;
+              if (nodes && nodes.home) nodes.home.val = `${data.flow.home_kw.toFixed(2)} kW`;
+              if (nodes && nodes.battery) nodes.battery.val = `${data.flow.battery_soc.toFixed(1)}% (${data.flow.battery_charge_kw >= 0 ? '+' : ''}${data.flow.battery_charge_kw.toFixed(1)}kW)`;
+              
+              // Update ToU Tariff & Financial savings card
+              if (data.tariff) {
+                const elSaved = document.getElementById('valDailySaved');
+                if (elSaved) elSaved.textContent = `$${data.tariff.daily_cost_saved_usd.toFixed(2)}`;
+                const elTariffBadge = document.getElementById('touTariffBadge');
+                if (elTariffBadge) elTariffBadge.textContent = `${data.tariff.tariff_period} ($${data.tariff.current_rate_usd_kwh.toFixed(2)}/kWh)`;
+                const elExport = document.getElementById('valGridExport');
+                if (elExport) elExport.textContent = `+$${data.tariff.grid_export_earned_usd.toFixed(2)}`;
+              }
+            }
+          } catch (e) {
+            // Ignored non-JSON heartbeats
+          }
+        };
+
+        wsClient.onclose = () => {
+          setTimeout(initWebSocket, 3000); // Auto reconnect
+        };
+      } catch (err) {
+        console.warn("WebSocket init error:", err);
       }
     }
 
@@ -1709,6 +1832,7 @@
       setTimeout(() => {
         initFloorplanCanvas();
         initEnergyFlowCanvas();
+        initWebSocket();
       }, 500);
     });
   </script>

@@ -107,31 +107,16 @@ class AuthService:
             name_part = email_clean.split('@')[0].replace('.', ' ').replace('_', ' ').replace('-', ' ').title()
             display_name = name_part if name_part else "Smart Home User"
 
-        if not user:
-            # Auto-create user so any entered email/password can log in
-            user = User(
-                user_id=f"usr-{secrets.token_hex(4)}",
-                email=email_clean,
-                full_name=display_name,
-                phone_number="+1-555-0100",
-                role=UserRole.PLATFORM_OWNER,
-                hashed_password=hash_password(pwd_clean),
-                is_active=True,
-                home_ids=["home-master-01"]
-            )
-            USERS_DB[email_clean.lower()] = user
-            USERS_DB[user.user_id] = user
-        else:
-            if full_name and full_name.strip():
-                user.full_name = display_name
-            if not verify_password(pwd_clean, user.hashed_password):
-                user.hashed_password = hash_password(pwd_clean)
+        if not user or not verify_password(pwd_clean, user.hashed_password):
+            self.log_audit("system", "Anonymous", "LOGIN_FAILED", f"email:{email_clean}", ip_address=ip, result="FAILURE")
+            raise AuthenticationError("Invalid email or password.")
 
-        # Persist user to SQLite database
-        try:
-            db_save_user(user)
-        except Exception:
-            pass
+        if full_name and full_name.strip():
+            user.full_name = full_name.strip()
+            try:
+                db_save_user(user)
+            except Exception:
+                pass
 
         if not user.is_active:
             raise AuthorizationError("Account is inactive or suspended.")
